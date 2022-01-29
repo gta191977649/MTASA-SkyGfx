@@ -12,7 +12,7 @@ A project brings the classic aesthetic look to MTA
   * PS2 Color Filter - ✔️
 - Building Pipeline
   * SimplePS
-    * ✔️, fully ported
+    * ✔️
   * BuildingVS
     * partially, some engine data requires to work, still working on that
   * BuildingVSFX - For model with specular lighting property
