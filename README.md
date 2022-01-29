@@ -12,8 +12,8 @@ A project brings the classic aesthetic look to MTA
   * PS2 Color Filter - ✔️
 - Building Pipeline
   * SimplePS - ✔️
-  * BuildingVS
-    * 🟠 partially, some engine data requires to work, still working on that
+  * BuildingVS - 🟠
+    * partially, some engine data requires to work, still working on that
   * BuildingVSFX - For model with specular lighting property
     * Not even start yet
 - Vehicle Pipeline
