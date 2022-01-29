@@ -13,7 +13,7 @@ A project brings the classic aesthetic look to MTA
 - Building Pipeline
   * SimplePS - ✔️
   * BuildingVS
-    * partially, some engine data requires to work, still working on that
+    * 🟠 partially, some engine data requires to work, still working on that
   * BuildingVSFX - For model with specular lighting property
     * Not even start yet
 - Vehicle Pipeline
