@@ -2,17 +2,17 @@
 A project brings the classic aesthetic look to MTA
 ## What have done or working in progress?
 - Pre-request Library
-  * Timecyc Parser - DONE
-  * Timecyc Interpolation - DONE, Source mainly conveted from librw, thanks to aap!
-  * Timecyc Render - DONE
+  * Timecyc Parser - ✔️
+  * Timecyc Interpolation - ✔️, Source mainly conveted from librw, thanks to aap!
+  * Timecyc Render - ✔️
   * Timecyc DebugTools (Optional) - DONE, But you're need dgs to work!
 - Postfx 
-  * Trails(Blur) - DONE
-  * Radiosity - DONE
-  * PS2 Color Filter - DONE!
+  * Trails(Blur) - ✔️
+  * Radiosity - ✔️
+  * PS2 Color Filter - ✔️
 - Building Pipeline
   * SimplePS
-    * Done, fully ported
+    * ✔️, fully ported
   * BuildingVS
     * partially, some engine data requires to work, still working on that
   * BuildingVSFX - For model with specular lighting property
