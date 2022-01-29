@@ -1,0 +1,10 @@
+addEventHandler( "onClientResourceStart",resourceRoot,function ( startedRes )
+    resetColorFilter()
+    resetSunColor()
+    resetSkyGradient()
+    resetSunSize()
+    -- start skygfx
+    initBuildingPipeline()
+    initPostFx()
+    noZTest() 
+end)

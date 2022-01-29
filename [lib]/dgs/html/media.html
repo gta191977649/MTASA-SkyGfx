@@ -1,0 +1,116 @@
+<html>
+	<meta charset="utf-8" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="imagetoolbar" content="no"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<style type="text/css">
+		*{
+		margin:0px;
+		padding:0px;
+		}
+
+		body{
+		height:100%;
+		width:100%;
+		}
+	</style>
+	<head>
+		<meta charset="utf-8" />
+		<script type="text/javascript">
+			function createListener(element){
+				if(element!=null){
+					element.onplaying = function(){
+						mta.triggerEvent("onDgsMediaPlay",element.currentTime)
+					}
+					element.onpause = function(){
+						mta.triggerEvent("onDgsMediaPause",element.currentTime)
+					}
+					element.onended = function(){
+						mta.triggerEvent("onDgsMediaStop",element.currentTime)
+					}
+					element.ontimeupdate = function(){
+						mta.triggerEvent("onDgsMediaTimeUpdate",element.currentTime,element.seekable.start(0),element.seekable.end(0))
+					}
+				}else{
+					mta.triggerEvent("onDgsMediaBrowserReturn",1)
+				}
+			}
+			function setCurrentTime(time){
+				var element = document.getElementById("element");
+				if(element!=null){
+					element.currentTime = time
+				}
+			}
+			function setLooped(state){
+				var element = document.getElementById("element");
+				if(element!=null){
+					element.loop = state
+				}
+			}
+			function stopMedia(){
+				var element = document.getElementById("element");
+				if(element!=null){
+					//if(element.stop)
+					//element.stop()
+					element.pause()
+					element.currentTime = 0
+				}
+			}
+			function playMedia(){
+				var element = document.getElementById("element");
+				if(element!=null){
+					if(element.play)
+					try {
+						element.play()
+					} catch (error) {
+						console.log(error)
+					}
+				}
+			}
+			function setSpeed(speed){
+				var element = document.getElementById("element");
+				if(element!=null){
+					element.playbackRate=speed
+				}
+			}
+			function pauseMedia(){
+				var element = document.getElementById("element");
+				if(element!=null){
+					if(element.pause)
+						element.pause()
+				}
+			}
+			function setSize(w,h){
+				var element = document.getElementById("element")
+				if(element!=null){
+					element.width = w
+					element.height = h
+				}
+			}
+			function clearMedia(){
+				var element = document.getElementById("element")
+				if(element!=null)
+					element.parentNode.removeChild(element);
+			}
+			function setFilled(state){
+				var element = document.getElementById("element")
+				if(state){
+					element.style.cssText = "object-fit: fill;"
+				}else{
+					element.style.cssText = "object-fit: none;"
+				}
+			}
+			function setFullScreen(state){
+				if(state){
+					var element = document.getElementById('element')
+					element.webkitRequestFullScreen()
+				}else{
+					document.webkitExitFullscreen()
+				}
+			}
+		</script>
+	</head>
+	<body>
+	</body>
+</html>
