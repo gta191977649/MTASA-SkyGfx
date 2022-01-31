@@ -1,4 +1,5 @@
 # MTASA-SkyGfx
+(Thanks to aap for the original work)
 A project brings the classic aesthetic look to MTA
 ## What have done or working in progress?
 - Pre-request Library
