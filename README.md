@@ -1,5 +1,5 @@
 # MTASA-SkyGfx
-A project brings the classic aesthetic look to MTA
+A project brings the classic aesthetic look to MTA (Thanks to aap for the original work).
 ## What have done or working in progress?
 - Pre-request Library
   * Timecyc Parser - ✔️
