@@ -4,7 +4,7 @@ addEventHandler( "onClientResourceStart",resourceRoot,function ( startedRes )
     resetSkyGradient()
     resetSunSize()
     -- start skygfx
-    initBuildingPipeline()
+    initBuildingSimplePSPipeline()
     initPostFx()
     noZTest() 
 end)

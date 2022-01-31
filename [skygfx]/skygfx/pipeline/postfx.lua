@@ -10,8 +10,7 @@ screenSource_2 = nil
 
 
 function doRadiosity(intensityLimit,filterPasses,renderPasses,intensity) 
-    -- blur first
-    local w, h = dxGetMaterialSize(screenSource)
+
     params = {}
     params[1] = 0
     params[2] = 1 / h

@@ -59,3 +59,4 @@ SKYGFX = {
     fogDisabled = false,
     brightnessMul = 1.2,
 }
+w, h = guiGetScreenSize()

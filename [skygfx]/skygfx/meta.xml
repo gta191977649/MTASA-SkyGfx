@@ -3,11 +3,14 @@
     <script src="rtpool.lua" type="client"/>
     <script src="pipeline/utils.lua" type="client"/>
     <script src="pipeline/building.lua" type="client"/>
+    <script src="pipeline/buildingSimplePS.lua" type="client"/>
     <script src="pipeline/postfx.lua" type="client"/>
     <script src="main.lua" type="client"/>
 
     <file src="neo/CarReflectionMask.png" type="client"/>
     <file src="shader/mta-helper.fx" type="client"/>
+    <file src="shader/buildingSimplePS.fx" type="client"/>
+    <file src="shader/buildingSimplePSDual.fx" type="client"/>
     <file src="shader/ztest.fx" type="client"/>
     <file src="shader/ps2BuildingVS.fx" type="client"/>
     <file src="shader/ps2BuildingFxVS.fx" type="client"/>
@@ -18,6 +21,7 @@
     <file src="shader/colorFilterPS.fx" type="client"/>
     <file src="shader/ps2ColorBlend.fx" type="client"/>
     <file src="shader/simplePS.fx" type="client"/>
+    <file src="shader/replace.fx" type="client"/>
 
     <include resource="timecyc"/>
 </meta>

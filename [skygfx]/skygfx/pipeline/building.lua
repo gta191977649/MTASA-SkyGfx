@@ -94,9 +94,14 @@ end
 function initBuildingPipeline() 
     -- simplePS
     shaderSimplePS = dxCreateShader("shader/simplePS.fx",1,0,true,"world")
-    engineApplyShaderToWorldTexture(shaderSimplePS,"*")
+
+
+    --local shaderReplacePS = dxCreateShader("shader/replace.fx")
+    
+
+    engineApplyShaderToWorldTexture(shaderReplacePS,"*")
     for k, txd in pairs(textureListTable.BuildingPSRemoveList) do 
-        engineRemoveShaderFromWorldTexture(shaderSimplePS,txd)
+        engineRemoveShaderFromWorldTexture(shaderReplacePS,txd)
     end
     doSimplePS()
 
