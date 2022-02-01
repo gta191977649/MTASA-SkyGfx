@@ -20,5 +20,9 @@ A project brings the classic aesthetic look to MTA (Thanks to aap for the origin
   * not even start yet
 - no corona zTest
   * partially done, via shader, but will bug other 2dfx's zbuffer, need better solution
+- PS2 Dual Pass Render - ✔️
+  * Yeah, it's done, thanks to ren
 - PS2 Alpha Test
   * not even start yet
+- Bugs/Issue
+  * Sun can see through by walls -> Due to zTest disabled 
