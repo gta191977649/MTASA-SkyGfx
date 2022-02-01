@@ -1,4 +1,5 @@
 #include "mta-helper.fx"
+
 texture tex < string textureState="0,Texture"; >;
 
 float zwriteThreshold = 128;
@@ -18,12 +19,9 @@ float 		fogRange;
 bool 		fogDisable;
 
 
-SamplerState Sampler0
+sampler Sampler0 = sampler_state 
 {
     Texture = (tex);
-    Filter = MIN_MAG_MIP_LINEAR;
-    AddressU = Wrap;
-    AddressV = Wrap;
 };
 
 
@@ -73,19 +71,33 @@ technique simplePS
 {
     pass P0
     {
+        /*
+            flags & (rxGEOMETRY_TEXTURED2 | rxGEOMETRY_TEXTURED:
+                RwD3D9SetTexture(texture, 0);
+                RwD3D9SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+                RwD3D9SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+                RwD3D9SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
+                RwD3D9SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+                RwD3D9SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+                RwD3D9SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
+        */
+    
         AlphaTestEnable= TRUE;
         AlphaFunc = GREATEREQUAL;
         AlphaRef = zwriteThreshold;
         VertexShader = compile vs_2_0 main_vs();
         PixelShader  = compile ps_2_0 main_ps();
     }
-    pass P1
-    {
-        AlphaTestEnable= TRUE;
-        AlphaFunc = GREATEREQUAL;
-        AlphaRef = zwriteThreshold;
-        VertexShader = compile vs_2_0 main_vs();
-        PixelShader  = compile ps_2_0 main_ps();
+    pass P1 {
+       
+
+        ColorOp[0] = MODULATE;//D3DTOP_MODULATE - 0x4
+        ColorArg1[0] = TEXTURE;//D3DTA_TEXTURE - 0x2
+        ColorArg2[0] = DIFFUSE;//D3DTA_DIFFUSE - 0x0
+        AlphaOp[0] = MODULATE;//D3DTOP_MODULATE - 0x4
+        AlphaArg1[0] = TEXTURE;//D3DTA_TEXTURE - 0x2
+        AlphaArg2[0] = DIFFUSE;//D3DTA_DIFFUSE - 0x0
+
     }
 
 }
