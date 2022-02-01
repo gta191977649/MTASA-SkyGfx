@@ -81,22 +81,31 @@ technique simplePS
                 RwD3D9SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
                 RwD3D9SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
         */
-    
-        AlphaTestEnable= TRUE;
-        AlphaFunc = GREATEREQUAL;
-        AlphaRef = zwriteThreshold;
-        VertexShader = compile vs_2_0 main_vs();
-        PixelShader  = compile ps_2_0 main_ps();
-    }
-    pass P1 {
-       
-
         ColorOp[0] = MODULATE;//D3DTOP_MODULATE - 0x4
         ColorArg1[0] = TEXTURE;//D3DTA_TEXTURE - 0x2
         ColorArg2[0] = DIFFUSE;//D3DTA_DIFFUSE - 0x0
         AlphaOp[0] = MODULATE;//D3DTOP_MODULATE - 0x4
         AlphaArg1[0] = TEXTURE;//D3DTA_TEXTURE - 0x2
         AlphaArg2[0] = DIFFUSE;//D3DTA_DIFFUSE - 0x0
+        
+ 
+        AlphaTestEnable= true;
+        AlphaFunc = GREATEREQUAL;
+        AlphaRef = zwriteThreshold;
+        ZFunc = LESSEQUAL;
+        zWriteEnable = true;
+        VertexShader = compile vs_2_0 main_vs();
+        PixelShader  = compile ps_2_0 main_ps();
+    }
+    pass P1 {
+       
+        ZWriteEnable = false;
+        AlphaRef = 1;
+        
+        VertexShader = compile vs_2_0 main_vs();
+        PixelShader  = compile ps_2_0 main_ps();
+
+
 
     }
 
