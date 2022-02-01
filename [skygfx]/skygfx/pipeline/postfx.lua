@@ -10,14 +10,11 @@ screenSource_2 = nil
 
 
 function doRadiosity(intensityLimit,filterPasses,renderPasses,intensity) 
-
     params = {}
     params[1] = 0
     params[2] = 1 / h
     params[3] = bitLShift(1, filterPasses)
     params[3] = params[3] * w/640.0
-
-
 
     --Blur vertically
     dxUpdateScreenSource(screenSource,true)
@@ -38,7 +35,7 @@ function doRadiosity(intensityLimit,filterPasses,renderPasses,intensity)
     params[2] = 0
     dxSetShaderValue( shaderBlurPS, "tex", rt )
     dxSetShaderValue( shaderBlurPS, "pxSz", {params[1],params[2],params[3]} )
-    dxDrawImage( 0,  0,  w, h, shaderBlurPS,0,0,0,tocolor(255,255,255,255) )
+    dxDrawImage( 0,  0,  w, h, shaderBlurPS)
   
     rt = rt_blurHorizontal
     dxSetRenderTarget()
