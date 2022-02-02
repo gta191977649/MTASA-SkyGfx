@@ -156,6 +156,8 @@ function doColorFilterStock(pipeline,rgba1,rgba2)
 
 end
 function initPostFx() 
+    resetColorFilter()
+    if SKYGFX.colorFilter ~= "PS2" then return end
     shaderBlurPS = dxCreateShader("shader/blurPS.fx", 0, 0, false)
     shaderRadiosityPS = dxCreateShader("shader/radiosity.fx", 0, 0, false)
     shaderAddblend = dxCreateShader("shader/addblend.fx", 0, 0, false)

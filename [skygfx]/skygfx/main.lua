@@ -5,8 +5,9 @@ addEventHandler( "onClientResourceStart",resourceRoot,function ( startedRes )
     resetSunSize()
     -- start skygfx
     initBuildingSimplePSPipeline()
-    worldPipeInit() 
+    initVehiclePiple()
     initPostFx()
+    initWorldMiscFx()
     noZTest() 
     
 end)

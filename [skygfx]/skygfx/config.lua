@@ -43,13 +43,24 @@ textureListTable.BuildingPSRemoveList = {
     "vehiclegrunge256","?emap*","vehiclegeneric*",
     "gensplash"
 }
-
+textureListTable.VehiclePSApplyList = {
+    "predator92body128", "monsterb92body256a", "monstera92body256a", "andromeda92wing","fcr90092body128",
+    "hotknifebody128b", "hotknifebody128a", "rcbaron92texpage64", "rcgoblin92texpage128", "rcraider92texpage128", 
+    "rctiger92body128","rhino92texpage256", "petrotr92interior128","artict1logos","rumpo92adverts256","dash92interior128",
+    "coach92interior128","combinetexpage128","hotdog92body256",
+    "raindance92body128", "cargobob92body256", "andromeda92body", "at400_92_256", "nevada92body256",
+    "polmavbody128a" , "sparrow92body128" , "hunterbody8bit256a" , "seasparrow92floats64" , 
+    "dodo92body8bit256" , "cropdustbody256", "beagle256", "hydrabody256", "rustler92body256", 
+    "shamalbody256", "skimmer92body128", "stunt256", "maverick92body128", "leviathnbody8bit256",
+    "vehiclegrunge256","?emap*"
+}
 
 SKYGFX = {
     ps2Modulate=true,
     dualPass=true,
     zwriteThreshold=128,
     -- postfx
+    colorFilter = "PS2", -- values: "PS2", "PC", "Mobile", (needs colorcycle.dat), "None"
     radiosityFilterPasses=2,
     radiosityRenderPasses=1,
     radiosityIntensity=35,
@@ -58,9 +69,11 @@ SKYGFX = {
     RSPIPE_PC_CustomBuilding_PipeID = true,
     fogDisabled = false,
     brightnessMul = 1,
-
-    grassAddAmbient=true,
-    grassFixPlacement=true,
+    -- grass
+    grassAddAmbient=false, --0x5DAEC8, need fuck the memory, not fully done.
+    --grassFixPlacement=true, 0x5DADB7, need fuck the memory
     grassBackfaceCull=true,
+    vehiclePipe= "PS2", -- values: "PS2", "PC", "Xbox", "Spec" (like PS2 but with specular lighting), "Neo" (like III/VC Xbox), "LCS", "VCS", "Mobile", "Env"
+
 }
 w, h = guiGetScreenSize()
