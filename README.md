@@ -18,7 +18,10 @@ A project brings the classic aesthetic look to MTA (Thanks to aap for the origin
   * BuildingVSFX - For model with specular lighting property
     * Not even start yet
 - Vehicle Pipeline
-  * not even start yet
+  * PS2 Pipeline - ✔️
+    * Done, you happy?
+  * Xbox Pipeline - 🟠
+    * Only specular lighting works. 
 - no corona zTest
   * partially done, via shader, but will bug other 2dfx's zbuffer, need better solution
 - World Effect
