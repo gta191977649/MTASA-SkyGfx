@@ -5,10 +5,12 @@
     <script src="pipeline/building.lua" type="client"/>
     <script src="pipeline/buildingSimplePS.lua" type="client"/>
     <script src="pipeline/postfx.lua" type="client"/>
+    <script src="pipeline/worldPipe.lua" type="client"/>
     <script src="main.lua" type="client"/>
 
     <file src="neo/CarReflectionMask.png" type="client"/>
     <file src="shader/mta-helper.fx" type="client"/>
+    <file src="shader/backfaceCull.fx" type="client"/>
     <file src="shader/buildingSimplePS.fx" type="client"/>
     <file src="shader/buildingSimplePSDual.fx" type="client"/>
     <file src="shader/ztest.fx" type="client"/>

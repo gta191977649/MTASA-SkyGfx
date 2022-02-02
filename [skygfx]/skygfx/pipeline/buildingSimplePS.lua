@@ -1,6 +1,7 @@
 shaderBuildingSimplePS = nil
 gDayNightBalance = 1
 gWetRoadEffect = 0
+gColorScale = SKYGFX.ps2Modulate and 0xFF / 0x80 or 1;
 
 
 function updateDayNightBalance(currentHour,currentMinute)
@@ -49,11 +50,7 @@ function doBuildingSimplePS()
     end
     dxSetShaderValue(shaderBuildingSimplePS,"dayparam",dayparam)
     dxSetShaderValue(shaderBuildingSimplePS,"nightparam",nightparam)
-    if SKYGFX.ps2Modulate then -- 255 / 128
-        dxSetShaderValue(shaderBuildingSimplePS,"colorScale",1.9921875)
-    else
-        dxSetShaderValue(shaderBuildingSimplePS,"colorScale",1)
-    end
+    dxSetShaderValue(shaderBuildingSimplePS,"colorScale",gColorScale)
     dxSetShaderValue(shaderBuildingSimplePS,"surfAmb",1)
     --fog 
     local fog_st = TIMECYC:getTimeCycleValue("fogSt")

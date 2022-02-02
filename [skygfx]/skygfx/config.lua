@@ -46,7 +46,7 @@ textureListTable.BuildingPSRemoveList = {
 
 
 SKYGFX = {
-    ps2Modulate=false,
+    ps2Modulate=true,
     dualPass=true,
     zwriteThreshold=128,
     -- postfx
@@ -57,6 +57,10 @@ SKYGFX = {
     usePCTimecyc = false,
     RSPIPE_PC_CustomBuilding_PipeID = true,
     fogDisabled = false,
-    brightnessMul = 1.2,
+    brightnessMul = 1,
+
+    grassAddAmbient=true,
+    grassFixPlacement=true,
+    grassBackfaceCull=true,
 }
 w, h = guiGetScreenSize()
