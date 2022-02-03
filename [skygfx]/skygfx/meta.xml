@@ -16,6 +16,7 @@
     <file src="shader/mta-helper.fx" type="client"/>
     <file src="shader/ps2CarFxVS.fx" type="client"/>
     <file src="shader/ps2CarFxVSPS.fx" type="client"/>
+    <file src="shader/ps2CarFxVSPSEnv.fx" type="client"/>
     <file src="shader/envCarPS.fx" type="client"/>
     <file src="shader/grass.fx" type="client"/>
     <file src="shader/buildingSimplePS.fx" type="client"/>
