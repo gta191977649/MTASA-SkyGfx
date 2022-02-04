@@ -112,6 +112,7 @@ function doColorFilter(pipeline,rgba1,rgba2)
     dxSetRenderTarget(rt_ps2ColorFilter)
     dxSetShaderValue( shaderColorFilterPS, "tex", screenSource_2 )
 
+
     -- RGB_2
     -- 25 180 0 60
     -- RGB_1
@@ -126,7 +127,7 @@ function doColorFilter(pipeline,rgba1,rgba2)
     dxDrawImage( 0,  0,  w, h, shaderColorFilterPS,0,0,0,tocolor(255,255,255,255))
 
 
-    --[[]]
+
     dxSetShaderValue( shaderPs2ColorBlendPS, "src", rt_ps2ColorFilter)
     dxSetShaderValue( shaderPs2ColorBlendPS, "dst", screenSource_2 )
     dxSetShaderValue( shaderPs2ColorBlendPS, "srcAlpha",a1/255 )
@@ -167,9 +168,16 @@ function initPostFx()
     local width ,height= guiGetScreenSize()
     screenSource = dxCreateScreenSource ( width, height ) 
     screenSource_2 = dxCreateScreenSource ( width, height ) 
-
+    
     --resetColorFilter()
     setColorFilter(0,0,0,0,0,0,0,0)
+    local offset_x = math.abs(SKYGFX.blurLeft + SKYGFX.blurRight) / 2
+    local offset_y = math.abs(SKYGFX.blurTop + SKYGFX.blurBottom) / 2
+
+    dxSetShaderValue( shaderColorFilterPS, "offset_x",offset_x)
+    dxSetShaderValue( shaderColorFilterPS, "offset_y",offset_y)
+    
+    
     addEventHandler( "onClientHUDRender", root,function()
         -- Reset render target pool
         RTPool.frameStart()
