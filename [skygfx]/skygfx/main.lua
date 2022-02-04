@@ -11,3 +11,12 @@ addEventHandler( "onClientResourceStart",resourceRoot,function ( startedRes )
     noZTest() 
     
 end)
+
+addEventHandler( "onClientResourceStop",resourceRoot,
+    function (  )
+        resetColorFilter()
+        resetSunColor()
+        resetSkyGradient()
+        resetSunSize()
+    end
+);
