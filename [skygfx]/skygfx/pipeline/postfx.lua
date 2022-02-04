@@ -178,7 +178,8 @@ function initPostFx()
         RTPool.frameStart()
         DebugResults.frameStart()
         if SKYGFX.doRadiosity == true then
-            doRadiosity(SKYGFX.radiosityIntensityLimit,SKYGFX.radiosityFilterPasses,SKYGFX.radiosityRenderPasses,SKYGFX.radiosityIntensity)
+            local radiosityIntensityLimit = SKYGFX.radiosityIntensityLimit == 0 and TIMECYC:getTimeCycleValue("radiosityLimit") or SKYGFX.radiosityIntensityLimit
+            doRadiosity(radiosityIntensityLimit,SKYGFX.radiosityFilterPasses,SKYGFX.radiosityRenderPasses,SKYGFX.radiosityIntensity)
         end
         
         
