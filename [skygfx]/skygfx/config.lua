@@ -61,10 +61,11 @@ SKYGFX = {
     zwriteThreshold=128,
     -- postfx
     colorFilter = "PS2", -- values: "PS2", "PC", "Mobile", (needs colorcycle.dat), "None"
-    blurLeft = 0.0005, -- Override PS2 color filter blur offset from stream.ini (comment out to use values from stream.ini)
-    blurTop = 0.0005, -- to disable blur set these to 0
-    blurRight = 0.0005,
-    blurBottom = 0.0005,
+    blurLeft = 0.0008, -- Override PS2 color filter blur offset 
+    blurTop = 0.0008, -- to disable blur set these to 0
+    blurRight = 0.0008,
+    blurBottom = 0.0008,
+    doRadiosity=true,-- Enable or disable radiosity
     radiosityFilterPasses=2,
     radiosityRenderPasses=1,
     radiosityIntensity=35,

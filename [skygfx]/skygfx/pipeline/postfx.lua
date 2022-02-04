@@ -8,7 +8,6 @@ screenSource = nil
 screenSource_2 = nil
 
 
-
 function doRadiosity(intensityLimit,filterPasses,renderPasses,intensity) 
     params = {}
     params[1] = 0
@@ -42,18 +41,12 @@ function doRadiosity(intensityLimit,filterPasses,renderPasses,intensity)
     dxDrawImage( 0,  0,  w, h, rt,0,0,0,tocolor(255,255,255,intensity))
 
 
-    -- do radiosity
-    local rt_radiosity = RTPool.GetUnused( w, h )
-    dxSetRenderTarget(rt_radiosity)
-
+    -- do radiosity    
     intensityLimit = intensityLimit/255.0;
     intensity = intensity/255.0;
     dxSetShaderValue( shaderRadiosityPS, "limit", intensityLimit )
     dxSetShaderValue( shaderRadiosityPS, "intensity", intensity )
     dxSetShaderValue( shaderRadiosityPS, "passes", renderPasses )
-    --[[ 
-    m_RadiosityFilterUCorrection
-    ]]
     
     local off = ((bitLShift(1, filterPasses))-1)
     -- only for upper left corner actually
@@ -72,16 +65,18 @@ function doRadiosity(intensityLimit,filterPasses,renderPasses,intensity)
 	params[2] = cv / h;
 	params[3] = (maxu-minu) / w;
 	params[4] = (maxv-minv) / h;
-
     dxSetShaderValue( shaderRadiosityPS, "xform", {params[1],params[2],params[3],params[4]} )
     dxSetShaderValue( shaderRadiosityPS, "tex", screenSource)
-    dxSetShaderValue( shaderAddblend, "TEX0", rt)
+    -- render radiosity
+    local rt_radiosity = RTPool.GetUnused( w, h )
+    dxSetRenderTarget(rt_radiosity)
+    dxDrawImage( 0,  0,  w, h, shaderRadiosityPS)
+    rt = rt_radiosity
     dxSetRenderTarget()
-
+    dxSetShaderValue(shaderAddblend,"src",rt_radiosity)
     dxDrawImage( 0,  0,  w, h, shaderAddblend,0,0,0,tocolor(255,255,255,SKYGFX.radiosityIntensity))
     
 
-    
 end
 
 function MODULATE2X(r,g,b,a) 
@@ -182,8 +177,10 @@ function initPostFx()
         -- Reset render target pool
         RTPool.frameStart()
         DebugResults.frameStart()
-
-        doRadiosity(SKYGFX.radiosityIntensityLimit,SKYGFX.radiosityFilterPasses,SKYGFX.radiosityRenderPasses,SKYGFX.radiosityIntensity)
+        if SKYGFX.doRadiosity == true then
+            doRadiosity(SKYGFX.radiosityIntensityLimit,SKYGFX.radiosityFilterPasses,SKYGFX.radiosityRenderPasses,SKYGFX.radiosityIntensity)
+        end
+        
         
         local rgba1 = TIMECYC:getTimeCycleValue("postfx1")
         local rgba2 = TIMECYC:getTimeCycleValue("postfx2")

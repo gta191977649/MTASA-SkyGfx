@@ -2,6 +2,9 @@
 # MTASA-SkyGfx
 A project brings the classic aesthetic look to MTA (Thanks to aap for the original work).
 ## What have done or working in progress?
+- ⚪ Not Start yet
+- 🟠 Partically Work
+- ✔️ Done
 - Pre-request Library
   * Timecyc Parser - ✔️
   * Timecyc Interpolation - ✔️, Source mainly conveted from librw, thanks to aap!
@@ -11,6 +14,8 @@ A project brings the classic aesthetic look to MTA (Thanks to aap for the origin
   * Trails(Blur) - ✔️
   * Radiosity - ✔️
   * PS2 Color Filter - ✔️
+  * Night Version Goggles - ⚪
+  * Infrared Goggles - ⚪
 - Building Pipeline
   * SimplePS - ✔️
   * BuildingVS - 🟠
