@@ -121,23 +121,23 @@ end
 function getDummyToScreenPos(element,dmmy,dir) 
 	dir = dir or "l"
 	local offset = dmmy == "light_front_main" and 0.5 or -0.5
+	--local offset = 0
 	if dir == "l" then
 		local fx,fy,fz = getVehicleDummyPosition (element,dmmy)
 		local fax,fay,faz = getPositionFromElementOffset(element,fx,fy,fz)
 		local sfx,sfy = getScreenFromWorldPosition(fax,fay,faz)
 
-		fax,fay,faz = getPositionFromElementOffset(element,fx,fy+offset,fz)
-
+		local ofax,ofay,ofaz = getPositionFromElementOffset(element,fx,fy+offset,fz)
 		if fx and fy then
-			return sfx,sfy,fax,fay,faz
+			return sfx,sfy,ofax,ofay,ofaz
 		end
 	elseif dir == "r" then
 		local fx,fy,fz = getVehicleDummyPosition (element,dmmy)
 		local fax,fay,faz = getPositionFromElementOffset(element,-fx,fy,fz)
 		local sfx,sfy = getScreenFromWorldPosition(fax,fay,faz)
-		fax,fay,faz = getPositionFromElementOffset(element,-fx,fy+offset,fz)
+		local ofax,ofay,ofaz = getPositionFromElementOffset(element,-fx,fy+offset,fz)
 		if fx and fy then
-			return sfx,sfy,fax,fay,faz
+			return sfx,sfy,ofax,ofay,ofaz
 		end
 	end
 	return false

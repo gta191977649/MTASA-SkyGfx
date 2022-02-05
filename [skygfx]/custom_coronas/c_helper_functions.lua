@@ -44,7 +44,7 @@ end
 ---------------------------------------------------------------------------------------------------
 local coronaDebugSwitch = false
 
-addCommandHandler( "debugCustomCoronas",
+addCommandHandler( "debugcor",
 function()
 	if isDebugViewActive() then 
 		coronaDebugSwitch = switchDebugCoronas(not coronaDebugSwitch)
