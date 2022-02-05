@@ -1,5 +1,7 @@
 <meta>
+    <oop>true</oop>
     <script src="config.lua" type="client"/>
+    <script src="math.lua" type="client"/>
     <script src="rtpool.lua" type="client"/>
     <script src="pipeline/utils.lua" type="client"/>
     <script src="pipeline/building.lua" type="client"/>
@@ -7,12 +9,14 @@
     <script src="pipeline/vehiclePipe.lua" type="client"/>
     <script src="pipeline/postfx.lua" type="client"/>
     <script src="pipeline/worldPipe.lua" type="client"/>
+    <script src="debug.lua" type="client"/>
     <script src="main.lua" type="client"/>
 
     <file src="neo/CarReflectionMask.png" type="client"/>
     <file src="txd/vehicleenvmap128.png" type="client"/>
     <file src="txd/vehiclespecdot64.png" type="client"/>
     <file src="txd/xvehicleenv128.png" type="client"/>
+    <file src="txd/coronaheadlightline.png" type="client"/>
     <file src="shader/mta-helper.fx" type="client"/>
     <file src="shader/ps2CarFxVS.fx" type="client"/>
     <file src="shader/ps2CarFxVSPS.fx" type="client"/>
@@ -34,4 +38,5 @@
     <file src="shader/replace.fx" type="client"/>
 
     <include resource="timecyc"/>
+    <include resource="custom_coronas"/>
 </meta>

@@ -1,4 +1,4 @@
-
+local renderCache = {}
 function doWorldFX() 
     -- grass world amb, done by shader enmulation,not 100% accurate
     local amb = TIMECYC:getTimeCycleValue("amb")
@@ -22,12 +22,194 @@ function doWorldFX()
 
     dxSetShaderValue(shaderGrassFx, "amb",{r/255,g/255,b/255})
 end
+function doVehicleLightTrails(veh) 
+    local x,y,z = getElementPosition(veh)
+    local px,py,pz = getElementPosition(localPlayer)
+    local dist = getDistanceBetweenPoints3D(x,y,z,px,py,pz)
+    if dist < SKYGFX.vehicleTrailDrawDist then
+
+        local fmlx,fmly,afmlx,afmly,afmlz = getDummyToScreenPos(veh,"light_front_main","l")
+        local fmrx,fmry,afmrx,afmry,afmrz = getDummyToScreenPos(veh,"light_front_main","r")
+        local frlx,frly,afrlx,afrly,afrlz = getDummyToScreenPos(veh,"light_rear_main","l")
+        local frrx,frry,afrrx,afrry,afrrz = getDummyToScreenPos(veh,"light_rear_main","r")
+
+        if fmlx and fmrx and frlx and frrx then
+            local vehicle = renderCache[veh]
+            --dxDrawText("L",fmlx,fmly)
+        -- dxDrawText("R",fmrx,fmry)
+            -- shift all array one after
+            for i =SKYGFX.vehicleTrailLength,1,-1 do 
+                if vehicle.trail_fl[i] ~= nil and vehicle.trail_fl[i-1] ~= nil then 
+                    vehicle.trail_fl[i] = vehicle.trail_fl[i-1]
+                    vehicle.trail_fr[i] = vehicle.trail_fr[i-1]
+                    vehicle.trail_rl[i] = vehicle.trail_rl[i-1]
+                    vehicle.trail_rr[i] = vehicle.trail_rr[i-1]
+                end
+                if i == 1 then 
+                    if #vehicle.trail_fl < SKYGFX.vehicleTrailLength then 
+                        vehicle.trail_fl[#vehicle.trail_fl+1] = {fmlx,fmly}
+                        vehicle.trail_fr[#vehicle.trail_fr+1] = {fmrx,fmry}
+                        vehicle.trail_rl[#vehicle.trail_rl+1] = {frlx,frly}
+                        vehicle.trail_rr[#vehicle.trail_rr+1] = {frrx,frry}
+                    else
+                        vehicle.trail_fl[1] = {fmlx,fmly}
+                        vehicle.trail_fr[1] = {fmrx,fmry}
+                        vehicle.trail_rl[1] = {frlx,frly}
+                        vehicle.trail_rr[1] = {frrx,frry}
+                    end
+                end
+            
+            end
+
+            for i =1,SKYGFX.vehicleTrailLength-1 do 
+                if vehicle.trail_fl[i] and vehicle.trail_fl[i+1] then
+                    local distFade = (1-(dist / SKYGFX.vehicleTrailDrawDist))
+                    local alpha1 = 1- (i / SKYGFX.vehicleTrailLength) * 255 * distFade 
+
+                    local alpha2 = (SKYGFX.vehicleTrailLength - (i+1)) / SKYGFX.vehicleTrailLength * 255 * distFade
+
+
+                    if getVehicleLightState(veh,1) == 0 and #vehicle.trail_fl == SKYGFX.vehicleTrailLength and isPosVisable(afmlx,afmly,afmlz)  then
+                        dxDrawLine(vehicle.trail_fl[i][1],vehicle.trail_fl[i][2],vehicle.trail_fl[i+1][1],vehicle.trail_fl[i+1][2],tocolor(255,255,255,alpha2))
+                    end
+                    if getVehicleLightState(veh,0) == 0  and #vehicle.trail_fr == SKYGFX.vehicleTrailLength and isPosVisable(afmrx,afmry,afmrz)  then
+                        dxDrawLine(vehicle.trail_fr[i][1],vehicle.trail_fr[i][2],vehicle.trail_fr[i+1][1],vehicle.trail_fr[i+1][2],tocolor(255,255,255,alpha2))
+                    end
+                    -- back
+                    if getVehicleLightState(veh,2) == 0  and #vehicle.trail_rl == SKYGFX.vehicleTrailLength and isPosVisable(afrlx,afrly,afrlz)  then
+                        dxDrawLine(vehicle.trail_rl[i][1],vehicle.trail_rl[i][2],vehicle.trail_rl[i+1][1],vehicle.trail_rl[i+1][2],tocolor(255,0,0,alpha2))
+                    end
+                    if getVehicleLightState(veh,3) == 0  and #vehicle.trail_rr == SKYGFX.vehicleTrailLength and isPosVisable(afrrx,afrry,afrrz)  then
+                        dxDrawLine(vehicle.trail_rr[i][1],vehicle.trail_rr[i][2],vehicle.trail_rr[i+1][1],vehicle.trail_rr[i+1][2],tocolor(255,0,0,alpha2))
+                    end
+                    
+                end
+            end
+
+        end
+    end
+  
+end
+
+function doVehicleBigLight(veh) 
+    -- front 
+    local function createLight() 
+        local cor = COR:createCorona(0,0,0,1,255,255,255,255)
+ 
+        --COR:setCoronaSizeXY(cor,1,0.1)
+        return cor
+    end
+
+
+    local vec_cam = getCamera().matrix:getForward()
+    local vec_veh = veh.matrix:getForward()
+    local fade = 1-vec_veh:dot(vec_cam)
+    local angle = math.atan2(vec_cam:getLength(), vec_veh:getLength())
+    print(angle)
+    if renderCache[veh].cor.front_l == nil then
+        local cor = createLight() 
+        addEventHandler("onClientElementDestroy", veh, function ()
+            COR:destroyCorona(cor)
+            renderCache[veh].cor.front_l = nil
+        end)
+        renderCache[veh].cor.front_l = cor
+    else
+        local dx,dy,dz = unpack(renderCache[veh].dummy["light_front_main"])
+        local x,y,z = getPositionFromElementOffset(veh,dx,dy,dz)
+        COR:setCoronaPosition(renderCache[veh].cor.front_l,x,y,z)
+        COR:setCoronaColor(renderCache[veh].cor.front_l,255,255,255,255*fade)
+    end
+
+
+    if renderCache[veh].cor.front_r == nil then
+        local cor = createLight() 
+        addEventHandler("onClientElementDestroy", veh, function ()
+           COR:destroyCorona(cor)
+           renderCache[veh].cor.front_r = nil
+        end)
+        renderCache[veh].cor.front_r = cor
+    else
+        local dx,dy,dz = unpack(renderCache[veh].dummy["light_front_main"])
+        local x,y,z = getPositionFromElementOffset(veh,-dx,dy,dz)
+        COR:setCoronaPosition(renderCache[veh].cor.front_r,x,y,z)
+        COR:setCoronaColor(renderCache[veh].cor.front_r,255,255,255,255*fade)
+    end
+end
+function doClassicFX() 
+    for veh,vehicle in pairs(renderCache) do 
+        if isElement(veh) and isElementOnScreen(veh) and areVehicleLightsOn(veh) then
+
+            doVehicleLightTrails(veh) 
+            doVehicleBigLight(veh) 
+        end
+    end
+
+
+end
+
+function initVehicleRenderCache(v) 
+    if not renderCache[v] then
+        renderCache[v] = {
+            veh = v,
+            trail_fl = {},
+            trail_fr = {},
+            trail_rl = {},
+            trail_rr = {},
+            dummy = {},
+            cor = {
+                front_l = nil,
+                front_r = nil,
+                back_l = nil,
+                back_r = nil,
+            },
+        }
+        -- get the constants
+        local x,y,z = getVehicleDummyPosition (v,"light_front_main")
+        local rx,ry,rz = getVehicleDummyPosition (v,"light_rear_main")
+        renderCache[v].dummy["light_front_main"] = {x,y,z}
+        renderCache[v].dummy["light_rear_main"] = {rx,ry,rz}
+    end
+end
 function initWorldMiscFx() 
     -- grass
     shaderGrassFx = dxCreateShader("shader/grass.fx", 0, 0, false, "world,object")
     engineApplyShaderToWorldTexture(shaderGrassFx, "tx*")
     dxSetShaderValue(shaderGrassFx, "backfacecull",SKYGFX.grassBackfaceCull)
-    if SKYGFX.grassAddAmbient then
-        addEventHandler("onClientPreRender", root, doWorldFX)
+
+    for k,v in ipairs(getElementsByType ("vehicle",root, true) ) do 
+        initVehicleRenderCache(v) 
     end
+
+    --[[
+    if SKYGFX.vehicleBigHeadLight then 
+        shaderBigHeadlight = dxCreateShader("shader/replace.fx", 0, 0, false, "vehicle")
+        local headlight = dxCreateTexture("txd/coronaheadlightline.png")
+        dxSetShaderValue(shaderBigHeadlight, "tex",headlight)
+        
+        engineApplyShaderToWorldTexture(shaderBigHeadlight,"unnamed")
+        
+    end
+    --]]
+
+    COR:setCoronasDistFade(20,3)
+    COR:enableDepthBiasScale(true)
+    -- vehicle classic effect
+    if SKYGFX.vehicleTrail or SKYGFX.vehicleBigHeadLight then
+        addEventHandler( "onClientElementStreamIn", root,function ()
+            if getElementType( source ) == "vehicle" then
+                initVehicleRenderCache(source) 
+            end
+        end)
+        addEventHandler( "onClientElementStreamOut", root,function ()
+            if getElementType( source ) == "vehicle" then
+                renderCache[source] = nil
+
+            end
+        end)
+        addEventHandler("onClientRender", root, function() 
+            doClassicFX() 
+            --dxDrawImage(0,0,800,600,shaderBigHeadlight)
+        end)
+    end
+
 end

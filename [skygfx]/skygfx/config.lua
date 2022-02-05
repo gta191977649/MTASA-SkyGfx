@@ -1,4 +1,5 @@
 TIMECYC = exports.timecyc
+COR = exports.custom_coronas
 
 -- SA Timecyc.dat mapping
 T = {
@@ -80,5 +81,11 @@ SKYGFX = {
     grassBackfaceCull=true,
     vehiclePipe= "PS2", -- values: "PS2", "PC", "Xbox", "Spec" (like PS2 but with specular lighting), "Neo" (like III/VC Xbox), "LCS", "VCS", "Mobile", "Env"
 
+    -- special
+    vehicleBigHeadLight = true, -- show vc/iii liked vehicle big headlight
+    vehicleTrail = true, -- show vc/iii liked vehicle light trail
+    vehicleTrailLength = 6, -- length of buffered frame
+    vehicleTrailDrawDist = 20,
+   
 }
 w, h = guiGetScreenSize()
