@@ -1,6 +1,9 @@
 ![SKYGFX](doc/skygfx.png)
 # MTASA-SkyGfx
 A project brings the classic aesthetic look to MTA (Thanks to aap for the original work).
+# The Thanks List
+- aap - for the original work & technical assit
+- Ren712 - for shaders & coronas help
 ## What have done or working in progress?
 - ⚪ Not Start yet/ not invesgate
 - 🟠 Partically Work
