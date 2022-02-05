@@ -74,7 +74,12 @@ A project brings the classic aesthetic look to MTA (Thanks to aap for the origin
       * partially works, however this will breaks and bugs up the other corona's ztesting in mta.
       * needs to work on a new solution.
     * fixShadows - ⚪
-
+  - Special Misc FX (Unique addon by nurupo)
+    * vehicleClassicFx ✔️ show VC/III liked vehicle big headlight and light trails when you rotate the screen
+    * vehicleTrailLength ✔️ Length of light trails (buffered frame)
+    * vehicleTrailDrawDist ✔️ What distance should trails start visiable?
+    * vehicleHeadLightAlpha ✔️ Alpha multiplier for head light
+    * vehicleRearLightAlpha ✔️  Alpha multiplier for rear light
     
   
 - Bugs/Issue
