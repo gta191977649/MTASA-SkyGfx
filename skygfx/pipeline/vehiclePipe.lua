@@ -22,6 +22,7 @@ function initVehiclePiple()
         dxSetShaderValue(shaderPS2CarEnvPS,"specmat",txd_envDot)
         dxSetShaderValue(shaderPS2CarEnvPS,"tx1",txd_envMap)
         dxSetShaderValue(shaderPS2CarEnvPS,"tx2",txd_envDot)
+        dxSetShaderValue(shaderPS2CarEnvPS,"shininess",SKYGFX.envPower)
         addEventHandler( "onClientRender", root, doVehiclePipeline )
     end
 

@@ -57,10 +57,9 @@ textureListTable.VehiclePSApplyList = {
 }
 
 SKYGFX = {
-    ps2Modulate=true,
-    dualPass=true,
-    zwriteThreshold=128,
-    disableZTest = true, -- if you want ps2 big sun lens
+    -- vehicle
+    vehiclePipe= "PS2", -- values: "PS2", "PC", "Xbox", "Spec" (like PS2 but with specular lighting), "Neo" (like III/VC Xbox), "LCS", "VCS", "Mobile", "Env"
+    envPower=1.0, --Env specular light power (the higher the smaller the highlight)
     -- postfx
     colorFilter = "PS2", -- values: "PS2", "PC", "Mobile", (needs colorcycle.dat), "None"
     blurLeft = 0.0004, -- Override PS2 color filter blur offset 
@@ -81,7 +80,11 @@ SKYGFX = {
     grassAddAmbient=false, --0x5DAEC8, need fuck the memory, not fully done.
     --grassFixPlacement=true, 0x5DADB7, need fuck the memory
     grassBackfaceCull=true,
-    vehiclePipe= "PS2", -- values: "PS2", "PC", "Xbox", "Spec" (like PS2 but with specular lighting), "Neo" (like III/VC Xbox), "LCS", "VCS", "Mobile", "Env"
+    -- world fx
+    ps2Modulate=true,
+    dualPass=true,
+    zwriteThreshold=128,
+    disableZTest = true, -- if you want ps2 big sun lens
     -- misc
     sunGlare = false, -- this adds the vehicle sun glares like in vice city.
     -- special
