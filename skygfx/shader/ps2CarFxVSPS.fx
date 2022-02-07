@@ -9,14 +9,14 @@ float3x3	envmat;
 float3x3	specmat;
 //float3		lightdir;
 
-float fxSwitch = 1.0f;
+float fxSwitch = 2.0f;
 float shininess = 1;
 float specularity = 0.1;
 float lightmult = 1;
 
 
 struct VS_INPUT {
-	float3 Position	: POSITION;
+	float4 Position	: POSITION;
 	float3 Normal	: NORMAL;
 	float2 Texcoord0: TEXCOORD0;
 	float3 Texcoord1: TEXCOORD1;
@@ -49,31 +49,11 @@ sampler2D tex2 = sampler_state
 
 VS_OUTPUT main_vs(VS_INPUT IN)
 {	
-    
-    float4x4 combined;
-    combined[0][0] = 0.5f;
-	combined[0][1] = 0.0f;
-	combined[0][2] = 0.0f;
-	combined[0][3] = 0.0f;
 
-	combined[1][0] = 0.0f;
-	combined[1][1] = -0.5f;
-	combined[1][2] = 0.0f;
-	combined[1][3] = 0.0f;
-
-	combined[2][0] = 0.0f;
-	combined[2][1] = 0.0f;
-	combined[2][2] = 0.0f;
-	combined[2][3] = 0.0f;
-
-	combined[3][0] = 0.5f;
-	combined[3][1] = 0.5f;
-	combined[3][2] = 0.0f;
-	combined[3][3] = 1.0f;
-    
 	VS_OUTPUT OUT;
-
-	OUT.Position = mul(float4(IN.Position,1),gWorldViewProjection);
+	float4 worldPos = mul ( IN.Position, gWorld );
+    float4 viewPos  = mul ( worldPos, gView );
+	OUT.Position = mul(viewPos,gProjection);
 	//OUT.Position = mul(float4(IN.Position,1), gWorldViewProjection);
 
   
@@ -119,7 +99,7 @@ VS_OUTPUT main_vs(VS_INPUT IN)
 	return OUT;
 }
 
-float4 main_ps(VS_OUTPUT IN) : COLOR
+float4 main_ps(VS_OUTPUT IN) : COLOR0
 {
 	//return tex2D(tex0, IN.Texcoord0.xy) * IN.Envcolor + tex2D(tex1, IN.Texcoord1.xy) * IN.Speccolor + tex2D(tex1, IN.Texcoord1.xy)  * IN.Speccolor + tex2D(tex2, IN.Texcoord2.xy)  * IN.Speccolor;
 	return tex2D(tex0, IN.Texcoord0.xy) * IN.Envcolor + tex2D(tex2, IN.Texcoord2.xy) * IN.Speccolor;
