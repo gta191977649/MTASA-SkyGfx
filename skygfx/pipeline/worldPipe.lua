@@ -82,6 +82,8 @@ function doClassicFXPreRender()
 end
 
 function initWorldMiscFx() 
+    -- sun glare vehicle
+    setWorldSpecialPropertyEnabled("vehiclesunglare",SKYGFX.sunGlare)
     -- grass
     shaderGrassFx = dxCreateShader("shader/grass.fx", 0, 0, false, "world,object")
     engineApplyShaderToWorldTexture(shaderGrassFx, "tx*")

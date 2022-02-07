@@ -82,6 +82,8 @@ SKYGFX = {
     --grassFixPlacement=true, 0x5DADB7, need fuck the memory
     grassBackfaceCull=true,
     vehiclePipe= "PS2", -- values: "PS2", "PC", "Xbox", "Spec" (like PS2 but with specular lighting), "Neo" (like III/VC Xbox), "LCS", "VCS", "Mobile", "Env"
+    -- misc
+    sunGlare = false, -- this adds the vehicle sun glares like in vice city.
     -- special
     vehicleClassicFx = true, -- show vc/iii liked vehicle big headlight
     vehicleTrailLength = 6, -- length of buffered frame
