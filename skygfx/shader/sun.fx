@@ -8,6 +8,7 @@
 float2 fViewportSize = float2(800, 600);
 
 bool bResAspectBug = true;
+bool zTest = false;
 float3 sSunVec = float3(0.65345698595047, 0.40483558177948, 0.63961094617844);
 float sSunSize = 2;
 float4 sSunColor1 = float4(0,1,0,0.5);
@@ -148,7 +149,7 @@ technique RTOutput_sun
 {
   pass P0
   {
-    ZEnable = false;
+    ZEnable = zTest;
     ZWriteEnable = false;
     CullMode = 1;
     AlphaBlendEnable = true;
@@ -160,20 +161,7 @@ technique RTOutput_sun
     VertexShader = compile vs_2_0 VertexShaderFunctionSun(sSunSize, sSunColor2);
     PixelShader  = compile ps_2_0 PixelShaderFunctionSun();
   }
-   pass P1
-  {
-    ZEnable = true;
-    ZWriteEnable = false;
-    CullMode = 1;
-    AlphaBlendEnable = true;
-    SrcBlend = SrcAlpha;
-    DestBlend = One;
-    AlphaTestEnable = true;
-    AlphaRef = 1;
-    FogEnable = false;
-    VertexShader = compile vs_2_0 VertexShaderFunctionSun(0.46 * sSunSize, sSunColor1);
-    PixelShader  = compile ps_2_0 PixelShaderFunctionSun();
-  }
+
 }
 
 // Fallback

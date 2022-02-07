@@ -8,7 +8,7 @@ addEventHandler( "onClientResourceStart",resourceRoot,function ( startedRes )
     initVehiclePiple()
     initPostFx()
     initWorldMiscFx()
-    noZTest() 
+    --noZTest() 
     
 end)
 

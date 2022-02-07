@@ -1,8 +1,0 @@
-<meta>
-	<info name="sun_emu" version="0.0.5" type="script" />
-	<min_mta_version client="1.5.0" server="1.5.0" />
-	<script src="c_main.lua" type="client" />
-	<file src="coronastar.png" type="client" />
-	<file src="RTOutput_sun.fx" type="client" />
-
-</meta>

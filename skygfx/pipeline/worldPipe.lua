@@ -1,4 +1,43 @@
 local renderCache = {}
+---------------------------------------------------------------------------------------------------
+-- material primitive functions
+---------------------------------------------------------------------------------------------------
+trianglestrip = {}
+trianglestrip.quad1x1 = {
+    {-1, -1, 0, tocolor(255, 255, 255), 0, 0}, 
+    {-1, 1, 0, tocolor(255, 255, 255), 0, 1}, 
+    {1, -1, 0, tocolor(255, 255, 255), 1, 0},
+    {1, 1, 0, tocolor(255, 255, 255), 1, 1}
+}
+function doSunFX() 
+	if not sunShader then return end
+	local c1r, c1g, c1b, c2r, c2g, c2b = getSunColor()
+	local sunSize = getSunSize()
+	dxSetShaderValue( sunShader, "sSunColor1", c1r / 255, c1g / 255, c1b / 255, 0  )
+	dxSetShaderValue( sunShader, "sSunColor2", c2r / 255, c2g / 255, c2b / 255, 1  )
+	dxSetShaderValue( sunShader, "sSunSize", sunSize  )
+	-- update the sun position
+	local h,m =	getTime()
+	s = m
+	sunAngle = (m + 60 * h + s/60.0) * 0.0043633231;
+	x = 0.7 + math.sin(sunAngle);
+	y = -0.7;
+	z = 0.2 - math.cos(sunAngle);
+	dxSetShaderValue( sunShader, "sSunVec",{x,y,z} )
+	dxDrawMaterialPrimitive3D( "trianglestrip", sunShader, false, unpack( trianglestrip.quad1x1 ) )	
+
+    --outputChatBox( )
+    --debug
+  
+    local vecPlayer = getCamera().matrix:getPosition()
+    local sunVec = vecPlayer + Vector3(x,y,z) * 100
+    local isClear = isLineOfSightClear (vecPlayer.x,vecPlayer.y,vecPlayer.z,sunVec.x,sunVec.y,sunVec.z, true,  true,  true,
+     true, false, true, false, localPlayer )
+    --dxDrawLine3D(vecPlayer.x,vecPlayer.y,vecPlayer.z, sunVec.x,sunVec.y,sunVec.z,isClear and tocolor(0,255,0,255) or tocolor(255,0,0,255))
+    
+    dxSetShaderValue( sunShader, "zTest",not isClear)
+
+end
 function doWorldFX() 
     -- grass world amb, done by shader enmulation,not 100% accurate
     local amb = TIMECYC:getTimeCycleValue("amb")
@@ -236,7 +275,14 @@ function initWorldMiscFx()
     for k,v in ipairs(getElementsByType ("vehicle",root, true) ) do 
         initVehicleRenderCache(v) 
     end
-
+    -- sun 
+    if SKYGFX.disableZTest then
+        sunShader = dxCreateShader("shader/sun.fx")
+        local starTex = dxCreateTexture("txd/coronastar.png", "argb")
+        dxSetShaderValue( sunShader, "fViewportSize", w, h )
+        dxSetShaderValue( sunShader, "bResAspectBug", true )
+        dxSetShaderValue( sunShader, "sTexStar", starTex  )
+    end
     --[[
     if SKYGFX.vehicleBigHeadLight then 
         shaderBigHeadlight = dxCreateShader("shader/replace.fx", 0, 0, false, "vehicle")
@@ -264,6 +310,7 @@ function initWorldMiscFx()
             end
         end)
         addEventHandler("onClientRender", root, function() 
+            doSunFX() 
             doClassicFX() 
             --dxDrawImage(0,0,800,600,shaderBigHeadlight)
         end)

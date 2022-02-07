@@ -60,6 +60,7 @@ SKYGFX = {
     ps2Modulate=true,
     dualPass=true,
     zwriteThreshold=128,
+    disableZTest = true, -- if you want ps2 big sun lens
     -- postfx
     colorFilter = "PS2", -- values: "PS2", "PC", "Mobile", (needs colorcycle.dat), "None"
     blurLeft = 0.0004, -- Override PS2 color filter blur offset 
@@ -80,7 +81,6 @@ SKYGFX = {
     --grassFixPlacement=true, 0x5DADB7, need fuck the memory
     grassBackfaceCull=true,
     vehiclePipe= "PS2", -- values: "PS2", "PC", "Xbox", "Spec" (like PS2 but with specular lighting), "Neo" (like III/VC Xbox), "LCS", "VCS", "Mobile", "Env"
-
     -- special
     vehicleClassicFx = true, -- show vc/iii liked vehicle big headlight
     vehicleTrailLength = 6, -- length of buffered frame

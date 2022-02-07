@@ -17,6 +17,7 @@
     <file src="txd/vehiclespecdot64.png" type="client"/>
     <file src="txd/xvehicleenv128.png" type="client"/>
     <file src="txd/coronaheadlightline.png" type="client"/>
+    <file src="txd/coronastar.png" type="client"/>
     <file src="shader/mta-helper.fx" type="client"/>
     <file src="shader/ps2CarFxVS.fx" type="client"/>
     <file src="shader/ps2CarFxVSPS.fx" type="client"/>
@@ -36,6 +37,7 @@
     <file src="shader/ps2ColorBlend.fx" type="client"/>
     <file src="shader/simplePS.fx" type="client"/>
     <file src="shader/replace.fx" type="client"/>
+    <file src="shader/sun.fx" type="client"/>
 
     <include resource="timecyc"/>
     <include resource="custom_coronas"/>
