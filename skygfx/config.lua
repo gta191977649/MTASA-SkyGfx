@@ -76,6 +76,7 @@ SKYGFX = {
     fogDisabled = false,
     buildingExtraBrightness = 1,
     vehicleExtraBrightness = 1,
+
     -- grass
     grassAddAmbient=false, --0x5DAEC8, need fuck the memory, not fully done.
     --grassFixPlacement=true, 0x5DADB7, need fuck the memory
@@ -87,12 +88,21 @@ SKYGFX = {
     disableZTest = true, -- if you want ps2 big sun lens
     -- misc
     sunGlare = false, -- this adds the vehicle sun glares like in vice city.
+    -- Modify final colors in YCbCr space
+    YCbCrCorrection=0,	-- turns this on or off (default 0)
+    lumaScale=0.8588,	-- multiplier for Y (default 0.8588)
+    lumaOffset=0.0627,	-- this is added to Y (default 0.0627)
+    CbScale=1.22,		-- like above with Cb and Cr (default 1.22)
+    CbOffset=0.0,		-- (default 0.0)
+    CrScale=1.22,		-- (default 1.22)
+    CrOffset=0.0,		-- (default 0.0)
+
     -- special
     vehicleClassicFx = true, -- show vc/iii liked vehicle big headlight
     vehicleTrailLength = 6, -- length of buffered frame
     vehicleTrailDrawDist = 20,
     vehicleHeadLightAlpha = 255,
-    vehicleRearLightAlpha = 120,
+    vehicleRearLightAlpha = 120, 
    
 }
 w, h = guiGetScreenSize()

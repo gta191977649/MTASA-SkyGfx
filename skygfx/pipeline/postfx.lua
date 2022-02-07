@@ -6,7 +6,20 @@ shaderRadiosityPS = nil
 shaderAddblend = nil
 screenSource = nil
 screenSource_2 = nil
+screenSource_3 = nil
 
+local m_YUV2RGB = {
+    {  0.299,	-0.168736,	 0.500}, 
+    {  0.587,	-0.331264,	-0.418688}, 
+    {  0.114,	 0.500,	-0.081312 }, 
+    {  0.000,	 0.000,	 0.000 },
+}
+local m_RGB2YUV = {
+	{  0.299,	-0.168736,	 0.500 },
+	{  0.587,	-0.331264,	-0.418688 },
+	{  0.114,	 0.500,	-0.081312},
+	{  0.000,	 0.000,	 0.000 },
+}
 
 function doRadiosity(intensityLimit,filterPasses,renderPasses,intensity) 
     params = {}
@@ -151,6 +164,15 @@ function doColorFilterStock(pipeline,rgba1,rgba2)
     setColorFilter(r1,g1,b1,255,r,g,b,a2)
 
 end
+
+function doColorGrading() 
+    dxUpdateScreenSource(screenSource_3,true)
+    dxSetShaderValue( shaderGradingPS, "tex",screenSource_3)
+
+
+    dxDrawImage( 0,  0,  w, h, shaderGradingPS,0,0,0,tocolor(255,255,255,100))
+end
+
 function initPostFx() 
     resetColorFilter()
     if SKYGFX.colorFilter ~= "PS2" then return end
@@ -159,20 +181,52 @@ function initPostFx()
     shaderAddblend = dxCreateShader("shader/addblend.fx", 0, 0, false)
     shaderColorFilterPS = dxCreateShader("shader/colorFilterPS.fx", 0, 0, false)
     shaderPs2ColorBlendPS = dxCreateShader("shader/ps2ColorBlend.fx", 0, 0, false)
+    shaderGradingPS = dxCreateShader("shader/gradingPS.fx", 0, 0, false)
 
     local width ,height= guiGetScreenSize()
     screenSource = dxCreateScreenSource ( width, height ) 
     screenSource_2 = dxCreateScreenSource ( width, height ) 
-    
+    screenSource_3 = dxCreateScreenSource ( width, height ) 
     --resetColorFilter()
     setColorFilter(0,0,0,0,0,0,0,0)
     local offset_x = math.abs(SKYGFX.blurLeft + SKYGFX.blurRight) / 2
     local offset_y = math.abs(SKYGFX.blurTop + SKYGFX.blurBottom) / 2
-
     dxSetShaderValue( shaderColorFilterPS, "offset_x",offset_x)
     dxSetShaderValue( shaderColorFilterPS, "offset_y",offset_y)
+
+    -- grading color
+   
+    --[[
+    local m = matrix({
+        {SKYGFX.lumaScale,0,0},
+        {0,SKYGFX.CbScale,0},
+        {0,0,SKYGFX.CrScale},
+        {SKYGFX.lumaOffset,SKYGFX.CbOffset,SKYGFX.CrOffset}
+    })
+    -]]
+   
+    local m = matrix({
+        {SKYGFX.lumaScale,0,0,SKYGFX.lumaOffset},
+        {0,SKYGFX.CbScale,0,SKYGFX.CbOffset},
+        {0,0,SKYGFX.CrScale,SKYGFX.CrOffset},
+    })
     
+    local m_RGB2YUV = matrix(m_RGB2YUV)
+    local m_YUV2RGB = matrix(m_YUV2RGB)
+
+    m = matrix.mul(m,m_RGB2YUV)
+    m = matrix.mul(m,m_YUV2RGB)
     
+    local r = {m[1][1],m[1][2],m[1][3],0}
+    local g = {m[2][1],m[2][2],m[2][3],0}
+    local b = {m[3][1],m[3][2],m[3][3],0}
+    
+   
+    dxSetShaderValue( shaderGradingPS, "redGrade",r)
+    dxSetShaderValue( shaderGradingPS, "greenGrade",g)
+    dxSetShaderValue( shaderGradingPS, "blueGrade",b)
+    
+
     addEventHandler( "onClientHUDRender", root,function()
         -- Reset render target pool
         RTPool.frameStart()
@@ -193,7 +247,11 @@ function initPostFx()
         end
       
         doColorFilter("PS2",rgba1,rgba2) 
+        --doColorGrading()
         --doColorFilterStock("PS2",rgba1,rgba2)
     end)
+    
+
+  
     
 end

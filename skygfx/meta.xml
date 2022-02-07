@@ -2,6 +2,7 @@
     <oop>true</oop>
     <script src="config.lua" type="client"/>
     <script src="math.lua" type="client"/>
+    <script src="matrix.lua" type="client"/>
     <script src="rtpool.lua" type="client"/>
     <script src="fx/vehiclefx.lua" type="client"/>
     <script src="pipeline/utils.lua" type="client"/>
@@ -25,6 +26,7 @@
     <file src="shader/ps2CarFxVSPSEnv.fx" type="client"/>
     <file src="shader/envCarPS.fx" type="client"/>
     <file src="shader/grass.fx" type="client"/>
+    <file src="shader/gradingPS.fx" type="client"/>
     <file src="shader/buildingSimplePS.fx" type="client"/>
     <file src="shader/buildingSimplePSDual.fx" type="client"/>
     <file src="shader/ztest.fx" type="client"/>
