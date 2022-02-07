@@ -89,4 +89,4 @@ A project brings the classic aesthetic look to MTA (Thanks to aap for the origin
 - Bugs/Issue
   * ~Sun can see through by walls -> Due to zTest disabled~ ✔️
     * fixed by manually re-create sun from shader, thanks to Ren712
-  * Element garbage collection for vehicle classic fx
+  * ~Element garbage collection for vehicle classic fx~ ✔️
