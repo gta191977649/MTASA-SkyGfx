@@ -3,6 +3,7 @@
     <script src="config.lua" type="client"/>
     <script src="math.lua" type="client"/>
     <script src="rtpool.lua" type="client"/>
+    <script src="fx/vehiclefx.lua" type="client"/>
     <script src="pipeline/utils.lua" type="client"/>
     <script src="pipeline/building.lua" type="client"/>
     <script src="pipeline/buildingSimplePS.lua" type="client"/>
