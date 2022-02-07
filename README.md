@@ -83,8 +83,9 @@ A project brings the classic aesthetic look to MTA (Thanks to aap for the origin
     * vehicleTrailDrawDist ✔️ What distance should trails start visiable?
     * vehicleHeadLightAlpha ✔️ Alpha multiplier for head light
     * vehicleRearLightAlpha ✔️  Alpha multiplier for rear light
-    
-  
+    * buildingExtraBrightness ✔️ Multiplier for building extra brightness
+    * vehicleExtraBrightness ✔️ Multiplier for building extra brightness
+ 
 - Bugs/Issue
   * Sun can see through by walls -> Due to zTest disabled 
   * Element garbage collection for vehicle classic fx
