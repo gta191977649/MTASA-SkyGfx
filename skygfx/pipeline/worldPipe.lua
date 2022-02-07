@@ -71,8 +71,8 @@ function doClassicFX()
 end
 function doClassicFXPreRender() 
     for veh,vehicle in pairs(renderCache) do 
-        if isElement(veh) and isElementOnScreen(veh) then
-            if areVehicleLightsOn(veh) then
+        if isElement(veh) then
+            if isElementOnScreen(veh) and areVehicleLightsOn(veh) then
                 doVehicleClassicLight(veh) 
             else
                 destoryAllVehicleClassicLights(veh)
