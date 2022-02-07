@@ -29,7 +29,7 @@ function doBuildingSimplePS()
     if not isElement(shaderBuildingSimplePS) then return end 
     local amb = TIMECYC:getTimeCycleValue("amb")
     if not amb then return end
-    local dirMult = TIMECYC:getTimeCycleValue("dirMult")
+    local dirMult = TIMECYC:getTimeCycleValue("dirMult") * SKYGFX.buildingExtraBrightness
     if not dirMult then return end
 
     local r,g,b = unpack(amb)

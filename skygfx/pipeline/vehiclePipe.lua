@@ -1,6 +1,6 @@
 
 function doVehiclePipeline() 
-    local dirMult = TIMECYC:getTimeCycleValue("dirMult")
+    local dirMult = TIMECYC:getTimeCycleValue("dirMult") * SKYGFX.vehicleExtraBrightness
     if not dirMult then return end
     dxSetShaderValue(shaderPS2CarEnvPS,"lightmult",dirMult)
 end

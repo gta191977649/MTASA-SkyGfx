@@ -75,7 +75,8 @@ SKYGFX = {
     usePCTimecyc = false,
     RSPIPE_PC_CustomBuilding_PipeID = true,
     fogDisabled = false,
-    brightnessMul = 1,
+    buildingExtraBrightness = 1,
+    vehicleExtraBrightness = 1,
     -- grass
     grassAddAmbient=false, --0x5DAEC8, need fuck the memory, not fully done.
     --grassFixPlacement=true, 0x5DADB7, need fuck the memory
