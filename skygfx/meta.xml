@@ -5,6 +5,7 @@
     <script src="matrix.lua" type="client"/>
     <script src="rtpool.lua" type="client"/>
     <script src="fx/vehiclefx.lua" type="client"/>
+    <script src="fx/rubbish.lua" type="client"/>
     <script src="pipeline/utils.lua" type="client"/>
     <script src="pipeline/building.lua" type="client"/>
     <script src="pipeline/buildingSimplePS.lua" type="client"/>
@@ -15,6 +16,7 @@
     <script src="main.lua" type="client"/>
 
     <file src="neo/CarReflectionMask.png" type="client"/>
+    <file src="txd/gameleaf01_64.png" type="client"/>
     <file src="txd/vehicleenvmap128.png" type="client"/>
     <file src="txd/vehiclespecdot64.png" type="client"/>
     <file src="txd/xvehicleenv128.png" type="client"/>

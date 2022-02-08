@@ -80,6 +80,10 @@ function doClassicFXPreRender()
         end
     end
 end
+function doTrashOnGround() 
+    CRubbish:Update() 
+    CRubbish:render()
+end
 
 function initWorldMiscFx() 
     -- sun glare vehicle
@@ -109,36 +113,12 @@ function initWorldMiscFx()
     
     engineApplyShaderToWorldTexture(shaderBigHeadlight,"coronaheadlightline")
     ]]
-
-    COR:setCoronasDistFade(20,3)
-    COR:enableDepthBiasScale(true)
-    -- vehicle classic effect
-    if SKYGFX.vehicleClassicFx then
-        -- register events
-        addEventHandler( "onClientElementStreamIn", root,function ()
-            if getElementType( source ) == "vehicle" and not renderCache[source] then
-                initVehicleRenderCache(source) 
-            end
-        end)
-        addEventHandler( "onClientElementStreamOut", root,function ()
-            if renderCache[source]  then
-                destoryAllVehicleClassicLights(source)
-                renderCache[source] = nil
-            end
-        end)
-        addEventHandler("onClientRender", root, function() 
-            doSunFX() 
-            doClassicFX() 
-            --dxDrawImage(0,0,800,600,shaderBigHeadlight)
-        end)
-        addEventHandler("onClientPreRender", root, function() 
-            doClassicFXPreRender() 
-            --dxDrawImage(0,0,800,600,shaderBigHeadlight)
-        end)
-
-        addEventHandler("onClientElementDestroy", root, function ()
-            destoryAllVehicleClassicLights(source)
-        end)
+    -- rubbish effect
+    if SKYGFX.trashOnGround then
+        CRubbish:init()
     end
-
+    if SKYGFX.vehicleClassicFx then
+        COR:setCoronasDistFade(20,3)
+        COR:enableDepthBiasScale(true)
+    end
 end

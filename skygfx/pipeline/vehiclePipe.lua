@@ -12,8 +12,7 @@ function initVehiclePiple()
             engineApplyShaderToWorldTexture(shaderPS2CarEnvPS,string.format("*%s*",txd))
         
         end
-        
-
+    
         local txd_envMap = dxCreateTexture("txd/vehicleenvmap128.png")
         local txd_envMap_2 = dxCreateTexture("txd/xvehicleenv128.png")
         local txd_envDot = dxCreateTexture("txd/vehiclespecdot64.png")
@@ -23,7 +22,6 @@ function initVehiclePiple()
         dxSetShaderValue(shaderPS2CarEnvPS,"tx1",txd_envMap)
         dxSetShaderValue(shaderPS2CarEnvPS,"tx2",txd_envDot)
         dxSetShaderValue(shaderPS2CarEnvPS,"shininess",SKYGFX.envPower)
-        addEventHandler( "onClientRender", root, doVehiclePipeline )
     end
 
     if SKYGFX.vehiclePipe == "Xbox" then
