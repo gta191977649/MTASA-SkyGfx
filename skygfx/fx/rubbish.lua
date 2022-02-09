@@ -1,3 +1,4 @@
+aSheets = {}
 cSheet = {
     m_basePos = {},
     m_animatedPos = {},
@@ -12,8 +13,21 @@ cSheet = {
     m_angle = 0,
     m_isVisible = false,
     m_targetIsVisible = false,
+    m_next,
+	m_prev,
 }
-aSheets = {}
+function cSheet:addToList(list) 
+    self.m_next = list.m_next
+	self.m_prev = list
+	list.m_next = self
+	self.m_next.m_prev = self
+end
+function cSheet:removeFromList() 
+	self.m_next.m_prev = self.m_prev
+	self.m_prev.m_next = self.m_next
+end
+
+
 
 -- CRubbish Class
 CRubbish = {
@@ -36,16 +50,16 @@ TestPrimitive = {
     {1, 1, 0, tocolor(255, 255, 255), 1, 1}
 }
 aAnimations = {
-	{ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-	  0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 },
-	--Normal move
-	{ 0.0, 0.05, 0.12, 0.25, 0.42, 0.57, 0.68, 0.8, 0.86, 0.9, 0.93, 0.95, 0.96, 0.97, 0.98, 0.99, 1.0,	--// XY movemnt
-	  0.15, 0.35, 0.6, 0.9, 1.2, 1.25, 1.3, 1.2, 1.1, 0.95, 0.8, 0.6, 0.45, 0.3, 0.2, 0.1, 0 },	--// Z movement
-	--Stirred up by ast vehicle
-	{ 0.0, 0.05, 0.12, 0.25, 0.42, 0.57, 0.68, 0.8, 0.95, 1.1, 1.15, 1.18, 1.15, 1.1, 1.05, 1.03, 1.0,
+	[0] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 },
+    -- Normal move
+    [1] = { 0.0, 0.05, 0.12, 0.25, 0.42, 0.57, 0.68, 0.8, 0.86, 0.9, 0.93, 0.95, 0.96, 0.97, 0.98, 0.99, 1.0,
+	  0.15, 0.35, 0.6, 0.9, 1.2, 1.25, 1.3, 1.2, 1.1, 0.95, 0.8, 0.6, 0.45, 0.3, 0.2, 0.1, 0 },	-- Z movement
+    -- Stirred up by ast vehicle
+    [2] = { 0.0, 0.05, 0.12, 0.25, 0.42, 0.57, 0.68, 0.8, 0.95, 1.1, 1.15, 1.18, 1.15, 1.1, 1.05, 1.03, 1.0,
 	  0.15, 0.35, 0.6, 0.9, 1.2, 1.25, 1.3, 1.2, 1.1, 0.95, 0.8, 0.6, 0.45, 0.3, 0.2, 0.1, 0 }
-};
-
+}
+--[[
 function addToList(this,new) 
 	this.m_next = new.m_next
 	this.m_prev = new
@@ -54,11 +68,10 @@ function addToList(this,new)
 end
 
 function removeFromList(this)
-   
 	this.m_next.m_prev = this.m_prev
 	this.m_prev.m_next = this.m_next
 end
-
+--]]
 textMarker = createMarker(0, 0, 0, "cylinder", 1, 255, 255, 255, 255)
 function CRubbish:render() 
     for type,mat in pairs(self.gpRubbishTexture) do
@@ -66,7 +79,7 @@ function CRubbish:render()
 		local tempBufferVerticesStored = 0
         for idx,sheet in ipairs(aSheets) do
             if sheet.m_state ~= 0 then
-                local pos
+                local pos 
                 local alpha = 100
                 if sheet.m_state == 1 then 
                     pos = sheet.m_basePos
@@ -139,7 +152,7 @@ function CRubbish:render()
     ]]
 end
 
-function CRubbish:Update() 
+function CRubbish:update() 
     local foundGround = false
 
     -- FRAMETIME
@@ -148,18 +161,17 @@ function CRubbish:Update()
     else
         self.rubbishVisibility = min(self.rubbishVisibility+5,255)
     end
-
     -- Spawn a new sheet
     local sheet = self.startEmptyList.m_next;
     if sheet ~= self.startEmptyList then 
-        local spawnDist = random(0,100) * SKYGFX.rubbish_max_dist * 0.01;
+        local spawnDist = bitAnd(random(0,UINT16_MAX),0xFF)/256 * SKYGFX.rubbish_max_dist;
 		local spawnAngle
-        local r = random(0,1)
-        if r == 1 then 
-            spawnAngle = random(0,359) 
+        local r = random(0,UINT16_MAX)
+        if bitAnd(r,1) then 
+            spawnAngle = bitAnd(random(0,UINT16_MAX),0xFF)/256 * 6.28
         else
             local _,_,z = getElementRotation(getCamera())
-            spawnAngle = z;
+            spawnAngle = (r-128)/160.0 + z;
         end
         local cx,cy,cz = getCameraMatrix()
         foundGround = getGroundPosition(cx,cy, cz+0.1)
@@ -168,7 +180,7 @@ function CRubbish:Update()
             sheet.m_basePos.y = cy + spawnDist*cos(spawnAngle);
             sheet.m_basePos.z = foundGround
             -- Found ground, so add to statics list
-			sheet.m_angle = spawnAngle
+			sheet.m_angle = bitAnd(random(0,UINT16_MAX),0xFF)/256 * 6.28;
 			sheet.m_state = 1
             --[[ CULL ZONE IS NOT SUPPORT BY MTA AT NOW
 			if(CCullZones::FindAttributesForCoors(sheet->m_basePos, nil) & ATTRZONE_NORAIN)
@@ -177,20 +189,114 @@ function CRubbish:Update()
 				sheet->m_isVisible = true;
             --]]
             sheet.m_isVisible = true
-			removeFromList(sheet)
-			addToList(sheet,self.startStaticsList)
+			sheet:removeFromList()
+			sheet:addToList(self.startStaticsList)
+            
         end
 		
     end
 
     -- Process animation
+   
 	sheet = self.startMoversList.m_next
 	while sheet ~= self.endMoversList do
-        print(getTickCount())
-	end
+        local currentTime = getTickCount() - sheet.m_moveStart
+		if currentTime < sheet.m_moveDuration then
+			--// Animation
+			local step = 16 * currentTime / sheet.m_moveDuration	-- 16 steps in animation
+			local stepTime = sheet.m_moveDuration/16	-- time in each step
+			local s = (currentTime - stepTime*step) / stepTime	-- position on step
+			local t = currentTime / sheet.m_moveDuration	-- position on total animation
+			-- factors for xy and z-movment
+			local fxy = aAnimations[sheet.m_animationType][step]*(1.0-s) + aAnimations[sheet.m_animationType][step+1]*s
+			local fz = aAnimations[sheet.m_animationType][step+17]*(1.0-s) + aAnimations[sheet.m_animationType][step+1+17]*s
+			sheet.m_animatedPos.x = sheet.m_basePos.x + fxy*sheet.m_xDist
+			sheet.m_animatedPos.y = sheet.m_basePos.y + fxy*sheet.m_yDist
+			sheet.m_animatedPos.z = (1.0-t)*sheet.m_basePos.z + t*sheet.m_targetZ + fz*sheet.m_animHeight
+			sheet.m_angle = sheet.m_angle + getGameSpeed()*0.04
+			if sheet.m_angle > 6.28 then
+				sheet.m_angle = sheet.m_angle - 6.28
+            end
+			sheet = sheet.m_next;
+		else
+			-- End of animation, back into statics list
+			sheet.m_basePos.x = sheet.m_basePos.x + sheet.m_xDist
+			sheet.m_basePos.y = sheet.m_basePos.y + sheet.m_yDist
+			sheet.m_basePos.z = sheet.m_targetZ
+			sheet.m_state = 1
+			sheet.m_isVisible = sheet.m_targetIsVisible
 
-    local vecWind = Vector3(getWindVelocity ())
-    --print(vecWind:getLength())
+			local next = sheet.m_next
+			sheet:removeFromList()
+			sheet:addToList(self.startStaticsList)
+			sheet = next
+        end
+	end
+ 
+ 
+    -- Stir up a sheet by wind
+	-- FRAMETIME
+    local vecWind = Vector3(getWindVelocity ()):getLength()
+    
+    local freq;
+	if vecWind < 0.1 then
+		freq = 31
+    elseif vecWind < 0.4 then
+		freq = 7
+	elseif vecWind < 0.7 then
+		freq = 1
+	else
+		freq = 0
+    end
+   
+    
+    if bitAnd(getTickCount(),freq) == 0 then
+        local i = random(1,SKYGFX.num_rubbish_sheets)
+        --print(i)
+        if aSheets[i].m_state == 1 then
+			aSheets[i].m_moveStart = getTickCount()
+			aSheets[i].m_moveDuration = vecWind*1500.0 + 1000.0;
+			aSheets[i].m_animHeight = 0.2;
+			aSheets[i].m_xDist = 3.0*vecWind;
+			aSheets[i].m_yDist = 3.0*vecWind;
+            -- Check if target position is ok
+			local tx = aSheets[i].m_basePos.x + aSheets[i].m_xDist;
+			local ty = aSheets[i].m_basePos.y + aSheets[i].m_yDist;
+			local tz = aSheets[i].m_basePos.z + 3.0;
+			-- Check if target position is ok
+            local foundGround = getGroundPosition(tx, ty, tz) + 0.1
+            if foundGround ~= 0 or foundGround ~= false then
+                local tx = aSheets[i].m_basePos.x + aSheets[i].m_xDist
+                local ty = aSheets[i].m_basePos.y + aSheets[i].m_yDist
+                local tz = aSheets[i].m_basePos.z + 3.0
+                aSheets[i].m_targetZ = foundGround
+
+                --[[ NO CULL ZONE
+                if CCullZones::FindAttributesForCoors(CVector(tx, ty, aSheets[i].m_targetZ), nil) & ATTRZONE_NORAIN then
+                    aSheets[i].m_targetIsVisible = false
+                else
+                    aSheets[i].m_targetIsVisible = true
+                end
+                --]]
+                -- start animation
+                aSheets[i].m_state = 2
+                aSheets[i].m_animationType = 1
+                aSheets[i]:removeFromList()
+                aSheets[i]:addToList(self.startMoversList)
+
+            end
+		end
+    end
+    -- Remove sheets that are too far away
+	local last = ((getTickCount()%(SKYGFX.num_rubbish_sheets/4)) + 1)*4;
+	for i = (getTickCount() % (SKYGFX.num_rubbish_sheets/4))*4 + 1, last do
+        local cx,cy,cz = getCameraMatrix()
+		if aSheets[i].m_state == 1 and getDistanceBetweenPoints2D(aSheets[i].m_basePos.x,aSheets[i].m_basePos.y,cx, cy) > math.sqrt(SKYGFX.rubbish_max_dist+1) then
+			aSheets[i].m_state = 0;
+			aSheets[i]:removeFromList()
+			aSheets[i]:addToList(self.startEmptyList)
+        end
+	end
 end
 
 function CRubbish:init()
@@ -215,7 +321,7 @@ function CRubbish:init()
     self.startEmptyList.m_next = aSheets[1]
 	self.startEmptyList.m_prev = nil
 	self.endEmptyList.m_next = nil
-	self.endEmptyList.m_prev = aSheets[SKYGFX.num_rubbish_sheets-1]
+	self.endEmptyList.m_prev = aSheets[SKYGFX.num_rubbish_sheets]
 
 	self.startStaticsList.m_next = self.endStaticsList
 	self.startStaticsList.m_prev = nil

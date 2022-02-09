@@ -104,7 +104,7 @@ SKYGFX = {
     vehicleHeadLightAlpha = 255,
     vehicleRearLightAlpha = 120, 
     trashOnGround = true, -- toogle vc/iii like trash on ground
-    num_rubbish_sheets = 4,
+    num_rubbish_sheets = 64,
     rubbish_max_dist = 23,
     rubbish_fade_dist = 20,
    

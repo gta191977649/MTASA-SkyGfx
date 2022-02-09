@@ -14,7 +14,7 @@ radToDeg = 180/math.pi
 degToRad = math.pi/180
 mathRandom = math.random
 random = math.random
-
+UINT16_MAX = 65535
 function mathAbs(x)
 	return x < 0 and -x or x
 end

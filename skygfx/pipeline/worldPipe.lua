@@ -81,7 +81,7 @@ function doClassicFXPreRender()
     end
 end
 function doTrashOnGround() 
-    CRubbish:Update() 
+    CRubbish:update() 
     CRubbish:render()
 end
 
