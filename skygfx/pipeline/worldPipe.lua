@@ -81,8 +81,8 @@ function doClassicFXPreRender()
     end
 end
 function doTrashOnGround() 
-    CRubbish:update() 
     CRubbish:render()
+    CRubbish:update() 
 end
 
 function initWorldMiscFx() 

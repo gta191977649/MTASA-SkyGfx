@@ -28,7 +28,7 @@ function cSheet:removeFromList()
 end
 
 
-
+m_FrameCounter = 0;
 -- CRubbish Class
 CRubbish = {
     rubbishIndexList = {},
@@ -94,8 +94,8 @@ function CRubbish:render()
                         alpha = 100 * (f1+f2)
                     end
                 end
-
                 local camX, camY, camZ = getCameraMatrix()
+              
                 local camDist = getDistanceBetweenPoints3D(pos.x,pos.y,pos.z,camX, camY, camZ)
                 if camDist < SKYGFX.rubbish_max_dist then
                     if camDist >= SKYGFX.rubbish_fade_dist then
@@ -197,7 +197,6 @@ function CRubbish:update()
     end
 
     -- Process animation
-   
 	sheet = self.startMoversList.m_next
 	while sheet ~= self.endMoversList do
         local currentTime = getTickCount() - sheet.m_moveStart
@@ -250,7 +249,7 @@ function CRubbish:update()
     end
    
     
-    if bitAnd(getTickCount(),freq) == 0 then
+    if bitAnd(m_FrameCounter,freq) == 0 then
         local i = random(1,SKYGFX.num_rubbish_sheets)
         --print(i)
         if aSheets[i].m_state == 1 then
@@ -288,8 +287,9 @@ function CRubbish:update()
 		end
     end
     -- Remove sheets that are too far away
-	local last = ((getTickCount()%(SKYGFX.num_rubbish_sheets/4)) + 1)*4;
-	for i = (getTickCount() % (SKYGFX.num_rubbish_sheets/4))*4 + 1, last do
+	local last = (m_FrameCounter % (SKYGFX.num_rubbish_sheets/4))*4 + 1
+	for i = (m_FrameCounter % (SKYGFX.num_rubbish_sheets/4))*4, last do
+        i = i == 0 and 1 or i
         local cx,cy,cz = getCameraMatrix()
 		if aSheets[i].m_state == 1 and getDistanceBetweenPoints2D(aSheets[i].m_basePos.x,aSheets[i].m_basePos.y,cx, cy) > math.sqrt(SKYGFX.rubbish_max_dist+1) then
 			aSheets[i].m_state = 0;
@@ -297,6 +297,8 @@ function CRubbish:update()
 			aSheets[i]:addToList(self.startEmptyList)
         end
 	end
+
+    m_FrameCounter = m_FrameCounter + 1
 end
 
 function CRubbish:init()
