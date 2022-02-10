@@ -53,8 +53,8 @@ A project brings the classic aesthetic look to MTA (Thanks to aap for the origin
 - World Effect
   - Dual Pass Render - ✔️
     * Yeah, it's done, thanks to ren712
-  - PS2 Alpha Test
-    * not even start yet
+  - PS2 Alpha Test ✔️
+    * See dual pass.
   - Grass
     * dualPassGrass - ✔️
       * it overrides by dual pass render.
