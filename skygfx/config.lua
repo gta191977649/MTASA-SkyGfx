@@ -88,6 +88,7 @@ SKYGFX = {
     dualPass=true,
     zwriteThreshold=128,
     disableZTest = true, -- if you want ps2 big sun lens
+    sunZTestLength = 1000, -- sun ztest length
     -- misc
     sunGlare = false, -- this adds the vehicle sun glares like in vice city.
     -- Modify final colors in YCbCr space
@@ -98,7 +99,9 @@ SKYGFX = {
     CbOffset=0.0,		-- (default 0.0)
     CrScale=1.22,		-- (default 1.22)
     CrOffset=0.0,		-- (default 0.0)
-
+    -- Heli Rotor Fix
+    fixRotor = true, -- fix the helicopter rotor blur texture like in ps2
+    rotorMaxAlpha = 120, -- max alpha for rotor
     -- special
     vehicleClassicFx = true, -- show vc/iii liked vehicle big headlight
     vehicleTrailLength = 6, -- length of buffered frame

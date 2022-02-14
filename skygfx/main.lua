@@ -65,6 +65,9 @@ function SKYGFX.start()
     initVehiclePiple()
     initPostFx()
     initWorldMiscFx()
+    if SKYGFX.fixRotor then 
+        enableRotorPs2Fix()
+    end
     --noZTest() -- no needed now
     -- add events
     addEventHandlerEx("onClientElementStreamIn", root,SKYGFX.onClientElementStreamIn)
@@ -80,6 +83,7 @@ function SKYGFX.stop()
     resetSunColor()
     resetSkyGradient()
     resetSunSize()
+    disableRotorPs2Fix()
     -- remove events
     removeEventHandlerEx("onClientElementStreamIn", root,SKYGFX.onClientElementStreamIn)
     removeEventHandlerEx("onClientElementStreamOut", root,SKYGFX.onClientElementStreamOut)

@@ -32,7 +32,7 @@ function doSunFX()
         --debug
     
         local vecPlayer = getCamera().matrix:getPosition()
-        local sunVec = vecPlayer + Vector3(x,y,z) * 320
+        local sunVec = vecPlayer + Vector3(x,y,z) * SKYGFX.sunZTestLength
         local isClear = isLineOfSightClear (vecPlayer.x,vecPlayer.y,vecPlayer.z,sunVec.x,sunVec.y,sunVec.z, true,  true,  true,
         true, false, true, false, localPlayer )
         --dxDrawLine3D(vecPlayer.x,vecPlayer.y,vecPlayer.z, sunVec.x,sunVec.y,sunVec.z,isClear and tocolor(0,255,0,255) or tocolor(255,0,0,255))
