@@ -73,9 +73,4 @@ function initBuildingSimplePSPipeline()
     for k, txd in pairs(textureListTable.BuildingPSRemoveList) do 
         engineRemoveShaderFromWorldTexture(shaderBuildingSimplePS,txd)
     end
-
-    addEventHandler( "onClientHUDRender", root,function() 
-        doBuildingSimplePS()
-    end)
-
 end

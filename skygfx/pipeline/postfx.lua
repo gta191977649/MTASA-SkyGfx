@@ -226,32 +226,28 @@ function initPostFx()
     dxSetShaderValue( shaderGradingPS, "greenGrade",g)
     dxSetShaderValue( shaderGradingPS, "blueGrade",b)
     
+end
 
-    addEventHandler( "onClientHUDRender", root,function()
-        -- Reset render target pool
-        RTPool.frameStart()
-        DebugResults.frameStart()
-        if SKYGFX.doRadiosity == true then
-            local radiosityIntensityLimit = SKYGFX.radiosityIntensityLimit == 0 and TIMECYC:getTimeCycleValue("radiosityLimit") or SKYGFX.radiosityIntensityLimit
-            doRadiosity(radiosityIntensityLimit,SKYGFX.radiosityFilterPasses,SKYGFX.radiosityRenderPasses,SKYGFX.radiosityIntensity)
-        end
-        
-        
-        local rgba1 = TIMECYC:getTimeCycleValue("postfx1")
-        local rgba2 = TIMECYC:getTimeCycleValue("postfx2")
-
-        -- Gotta fix alpha for effects that assume PS2 alpha range
-        if SKYGFX.usePCTimecyc then 
-            rgba1[4] = rgba1[4] / 2
-            rgba2[4] = rgba2[4] / 2
-        end
-      
-        doColorFilter("PS2",rgba1,rgba2) 
-        --doColorGrading()
-        --doColorFilterStock("PS2",rgba1,rgba2)
-    end)
+function renderPostFX() 
+    -- Reset render target pool
+    RTPool.frameStart()
+    DebugResults.frameStart()
+    if SKYGFX.doRadiosity == true then
+        local radiosityIntensityLimit = SKYGFX.radiosityIntensityLimit == 0 and TIMECYC:getTimeCycleValue("radiosityLimit") or SKYGFX.radiosityIntensityLimit
+        doRadiosity(radiosityIntensityLimit,SKYGFX.radiosityFilterPasses,SKYGFX.radiosityRenderPasses,SKYGFX.radiosityIntensity)
+    end
     
-
-  
     
+    local rgba1 = TIMECYC:getTimeCycleValue("postfx1")
+    local rgba2 = TIMECYC:getTimeCycleValue("postfx2")
+
+    -- Gotta fix alpha for effects that assume PS2 alpha range
+    if SKYGFX.usePCTimecyc then 
+        rgba1[4] = rgba1[4] / 2
+        rgba2[4] = rgba2[4] / 2
+    end
+
+    doColorFilter("PS2",rgba1,rgba2) 
+    --doColorGrading()
+    --doColorFilterStock("PS2",rgba1,rgba2)
 end

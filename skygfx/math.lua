@@ -2,6 +2,8 @@ local getElementPosition = getElementPosition
 local getElementRotation = getElementRotation
 cos = math.cos
 sin = math.sin
+max = math.max
+min = math.min
 mathSin = sin
 mathCos = cos
 mathAtan2 = math.atan2
@@ -9,9 +11,10 @@ degToPi = math.pi/180
 mathAtan = math.atan
 mathPi = math.pi
 radToDeg = 180/math.pi
---degToRad = math.pi/180
+degToRad = math.pi/180
 mathRandom = math.random
-
+random = math.random
+UINT16_MAX = 65535
 function mathAbs(x)
 	return x < 0 and -x or x
 end
@@ -141,4 +144,20 @@ function getDummyToScreenPos(element,dmmy,dir)
 		end
 	end
 	return false
+end
+
+function table.clone(tab)
+    if tab== nil then
+        return nil
+    end
+    local copy = {}
+    for k, v in pairs(tab) do
+        if type(v) == 'table' then
+            copy[k] = table.clone(v)
+        else
+            copy[k] = v
+        end
+    end
+    setmetatable(copy, table.clone(getmetatable(tab)))
+    return copy
 end

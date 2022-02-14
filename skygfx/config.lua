@@ -57,6 +57,8 @@ textureListTable.VehiclePSApplyList = {
 }
 
 SKYGFX = {
+    -- start by default
+    autoStart = true,
     -- vehicle
     vehiclePipe= "PS2", -- values: "PS2", "PC", "Xbox", "Spec" (like PS2 but with specular lighting), "Neo" (like III/VC Xbox), "LCS", "VCS", "Mobile", "Env"
     envPower=1.0, --Env specular light power (the higher the smaller the highlight)
@@ -74,7 +76,7 @@ SKYGFX = {
     usePCTimecyc = false,
     RSPIPE_PC_CustomBuilding_PipeID = true,
     fogDisabled = false,
-    buildingExtraBrightness = 1,
+    buildingExtraBrightness = 1.2,
     vehicleExtraBrightness = 1,
 
     -- grass
@@ -103,6 +105,10 @@ SKYGFX = {
     vehicleTrailDrawDist = 20,
     vehicleHeadLightAlpha = 255,
     vehicleRearLightAlpha = 120, 
+    trashOnGround = true, -- toogle vc/iii like trash on ground
+    num_rubbish_sheets = 64,
+    rubbish_max_dist = 23,
+    rubbish_fade_dist = 20,
    
 }
 w, h = guiGetScreenSize()
