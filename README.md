@@ -73,9 +73,10 @@ A project brings the classic aesthetic look to MTA (Thanks to aap for the origin
     * transparentLockon - ⚪
     * lightningIlluminatesWorld - ⚪ toogle timecyc lighting on world object.
     * fixPcCarLight - ⚪
-    * coronaZtest - 🟠
-      * partially works, however this will breaks and bugs up the other corona's ztesting in mta.
-      * needs to work on a new solution.
+    * coronaZtest - ✔️
+      * ~partially works, however this will breaks and bugs up the other corona's ztesting in mta.~
+      * ~needs to work on a new solution.~
+      * Fixed, Thanks for ren712's sun.
     * fixShadows - ⚪
   - Special Misc FX (Unique addon by nurupo)
     * vehicleClassicFx ✔️ show VC/III liked vehicle big headlight and light trails when you rotate the screen
