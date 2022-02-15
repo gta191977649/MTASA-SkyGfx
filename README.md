@@ -85,6 +85,8 @@ A project brings the classic aesthetic look to MTA (Thanks to aap for the origin
     * vehicleRearLightAlpha ✔️  Alpha multiplier for rear light
     * buildingExtraBrightness ✔️ Multiplier for building extra brightness
     * vehicleExtraBrightness ✔️ Multiplier for building extra brightness
+    * fixRotor ✔️ fix the helicopter rotor blur texture like in ps2
+    * rotorMaxAlpha ✔️ max alpha for rotor
  
 - Bugs/Issue
   * ~Sun can see through by walls -> Due to zTest disabled~ ✔️
