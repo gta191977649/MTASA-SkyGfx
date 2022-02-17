@@ -42,7 +42,7 @@ textureListTable.BuildingPSRemoveList = {
     "fist","*icon","headlight*",
     "unnamed","sphere","plaintarmac*",
     "vehiclegrunge256","?emap*","vehiclegeneric*",
-    "gensplash"
+    "gensplash","cj_*","pinebranch*",
 }
 textureListTable.VehiclePSApplyList = {
     "predator92body128", "monsterb92body256a", "monstera92body256a", "andromeda92wing","fcr90092body128",

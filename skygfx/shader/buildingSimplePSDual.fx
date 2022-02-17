@@ -83,10 +83,11 @@ technique simplePS
         */
  
         
- 
+        
         AlphaTestEnable= true;
         AlphaFunc = GREATEREQUAL;
         AlphaRef = zwriteThreshold;
+        
         ZFunc = LESSEQUAL;
         zWriteEnable = true;
         VertexShader = compile vs_2_0 main_vs();
