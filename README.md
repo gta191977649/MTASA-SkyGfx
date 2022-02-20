@@ -73,10 +73,9 @@ A project brings the classic aesthetic look to MTA (Thanks to aap for the origin
     * transparentLockon - ⚪
     * lightningIlluminatesWorld - ⚪ toogle timecyc lighting on world object.
     * fixPcCarLight - ⚪
-    * coronaZtest - ✔️
-      * ~partially works, however this will breaks and bugs up the other corona's ztesting in mta.~
-      * ~needs to work on a new solution.~
-      * Fixed, Thanks for ren712's sun.
+    * coronaZtest - 🟠
+      * partially works, however this will breaks and bugs up the other corona's ztesting in mta.
+      * needs to work on a new solution.
     * fixShadows - ⚪
   - Special Misc FX (Unique addon by nurupo)
     * vehicleClassicFx ✔️ show VC/III liked vehicle big headlight and light trails when you rotate the screen
@@ -86,8 +85,6 @@ A project brings the classic aesthetic look to MTA (Thanks to aap for the origin
     * vehicleRearLightAlpha ✔️  Alpha multiplier for rear light
     * buildingExtraBrightness ✔️ Multiplier for building extra brightness
     * vehicleExtraBrightness ✔️ Multiplier for building extra brightness
-    * fixRotor ✔️ fix the helicopter rotor blur texture like in ps2
-    * rotorMaxAlpha ✔️ max alpha for rotor
  
 - Bugs/Issue
   * ~Sun can see through by walls -> Due to zTest disabled~ ✔️

@@ -1,9 +1,13 @@
+local getWeatherSA = getWeather
+local setWeatherSA = setWeather
 Timecyc = {}
 Weather = {
+    interpolationLength = 1, -- 1 hour
+    interpolateStart = 0,
     numHours = 8,-- for normal sa timecyc.dat 
-    old = 0,
-    new = 0,
-    interpolation = 0,
+    old = getWeatherSA(),
+    new = getWeatherSA(),
+    interpolation = 1,
     data ={},
 }
 -- SA Timecyc.dat mapping
@@ -69,11 +73,6 @@ end
 
 function interpolate(a,b,fa,fb,isCurrent)
     isCurrent = isCurrent or false
-    --[[
-        unused 
-        Interpolate(&dst->amb_bl, &a->amb_bl, &b->amb_bl, fa, fb);
-	    Interpolate(&dst->amb_obj_bl, &a->amb_obj_bl, &b->amb_obj_bl, fa, fb);
-    ]]
     local weather = {}
     if not isCurrent then -- interpolate direct from timecyc data
         weather.amb = interpolateRGB({a[T["ambR"]],a[T["ambG"]],a[T["ambB"]]}, {b[T["ambR"]],b[T["ambG"]],b[T["ambB"]]}, fa, fb)
@@ -193,12 +192,35 @@ function updateSA(weather_id,currentHour,currentMinute)
     setFogDistance(currentColours.fogSt)
     setFarClipDistance(currentColours.farClp)
     Weather.data = currentColours
+
+    -- update interpolation
+    if Weather.interpolateStart ~= 0 then 
+        if Weather.interpolation < 1 then 
+            local endTime =  (Weather.interpolationLength * 60000)
+            Weather.interpolation = (getTickCount() - Weather.interpolateStart) / endTime
+        else -- stop weather interpolation
+            Weather.old = Weather.new
+            setWeatherSA(Weather.new)
+            Weather.interpolateStart = 0 -- stop interpolation
+        end
+    end
 end 
 function getTimeCycleValue(key) 
     --local h,m = getTime()
     --local time = clampTimeIndex(h)
     --return tonumber(Timecyc[weather_id+1][time][offset])
     return Weather.data[key]
+end
+function setWeatherBlended(wea) 
+    Weather.new = wea
+    Weather.interpolateStart = getTickCount()
+    Weather.interpolation = 0
+end
+function setWeather(wea) 
+    Weather.old =wea
+end
+function getWeather() 
+    return Weather.old,Weather.interpolation < 1 and Weather.new or nil
 end
 addEventHandler( "onClientResourceStart",resourceRoot,function ()
     loadTimeCycle("timecyc.dat")
@@ -208,3 +230,5 @@ addEventHandler( "onClientResourceStart",resourceRoot,function ()
         updateSA(wea,h,m)
     end)
 end)
+--setWeather(1) 
+--setWeatherBlended(8) 
