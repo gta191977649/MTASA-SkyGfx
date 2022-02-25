@@ -69,7 +69,6 @@ end
 function doClassicFX() 
     for veh,vehicle in pairs(renderCache) do 
         if isElement(veh) and isElementOnScreen(veh) and areVehicleLightsOn(veh) then
-
             doVehicleLightTrails(veh) 
         end
     end

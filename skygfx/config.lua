@@ -58,7 +58,7 @@ textureListTable.VehiclePSApplyList = {
 
 SKYGFX = {
     -- start by default
-    autoStart = true,
+    autoStart = false,
     -- vehicle
     vehiclePipe= "PS2", -- values: "PS2", "PC", "Xbox", "Spec" (like PS2 but with specular lighting), "Neo" (like III/VC Xbox), "LCS", "VCS", "Mobile", "Env"
     envPower=1.0, --Env specular light power (the higher the smaller the highlight)

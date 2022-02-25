@@ -84,7 +84,7 @@ technique simplePS
  
         
         
-        AlphaTestEnable= true;
+        //AlphaTestEnable= true;
         AlphaFunc = GREATEREQUAL;
         AlphaRef = zwriteThreshold;
         
