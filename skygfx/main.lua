@@ -16,6 +16,7 @@ function SKYGFX.onClientElementStreamOut()
     end
 end
 function SKYGFX.onClientRender() 
+    doBuildingSimplePS()
     doVehiclePipeline()
     if SKYGFX.disableZTest then
         doSunFX() 
@@ -33,7 +34,6 @@ function SKYGFX.onClientPreRender()
     end
 end
 function SKYGFX.onClientHUDRender() 
-    doBuildingSimplePS()
     renderPostFX() 
 end
 function SKYGFX.onClientElementDestroy()
@@ -72,9 +72,9 @@ function SKYGFX.start()
     -- add events
     addEventHandlerEx("onClientElementStreamIn", root,SKYGFX.onClientElementStreamIn)
     addEventHandlerEx("onClientElementStreamOut", root,SKYGFX.onClientElementStreamOut)
-    addEventHandlerEx("onClientRender", root,SKYGFX.onClientRender)
-    addEventHandlerEx("onClientPreRender", root,SKYGFX.onClientPreRender)
-    addEventHandlerEx("onClientHUDRender", root,SKYGFX.onClientHUDRender)
+    addEventHandlerEx("onClientRender", root,SKYGFX.onClientRender,false,"low")
+    addEventHandlerEx("onClientPreRender", root,SKYGFX.onClientPreRender,false,"low")
+    addEventHandlerEx("onClientHUDRender", root,SKYGFX.onClientHUDRender,false,"low")
     addEventHandlerEx("onClientElementDestroy", root,SKYGFX.onClientElementDestroy)
 end
 

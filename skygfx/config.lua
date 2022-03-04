@@ -58,7 +58,7 @@ textureListTable.VehiclePSApplyList = {
 
 SKYGFX = {
     -- start by default
-    autoStart = false,
+    autoStart = true,
     -- vehicle
     vehiclePipe= "PS2", -- values: "PS2", "PC", "Xbox", "Spec" (like PS2 but with specular lighting), "Neo" (like III/VC Xbox), "LCS", "VCS", "Mobile", "Env"
     envPower=1.0, --Env specular light power (the higher the smaller the highlight)
@@ -88,7 +88,7 @@ SKYGFX = {
     dualPass=true,
     zwriteThreshold=128,
     disableZTest = true, -- if you want ps2 big sun lens
-    sunZTestLength = 1000, -- sun ztest length
+    sunZTestLength = 2000, -- sun ztest length
     -- misc
     sunGlare = false, -- this adds the vehicle sun glares like in vice city.
     -- Modify final colors in YCbCr space
