@@ -18,6 +18,9 @@ end
 function SKYGFX.onClientRender() 
     doBuildingSimplePS()
     doVehiclePipeline()
+    if SKYGFX.fixRotor then
+        renderRotorEffect()
+    end
     if SKYGFX.disableZTest then
         doSunFX() 
     end
@@ -42,9 +45,9 @@ function SKYGFX.onClientElementDestroy()
     end
 end
 
-function addEventHandlerEx(sEventName, pElementAttachedTo, func ) 
+function addEventHandlerEx(sEventName, pElementAttachedTo, func,pro,priority) 
     if not isEventHandlerAdded( sEventName, pElementAttachedTo, func ) then 
-        addEventHandler( sEventName, pElementAttachedTo, func )
+        addEventHandler( sEventName, pElementAttachedTo, func,pro,priority )
     end
 end
 function removeEventHandlerEx(sEventName, pElementAttachedTo, func ) 
@@ -60,6 +63,8 @@ function SKYGFX.start()
     resetSunColor()
     resetSkyGradient()
     resetSunSize()
+    -- loadtxdDB
+    loadtxdDB()
     -- start skygfx
     initBuildingSimplePSPipeline()
     initVehiclePiple()
@@ -83,7 +88,9 @@ function SKYGFX.stop()
     resetSunColor()
     resetSkyGradient()
     resetSunSize()
-    disableRotorPs2Fix()
+    if SKYGFX.fixRotor then 
+        disableRotorPs2Fix()
+    end
     -- remove events
     removeEventHandlerEx("onClientElementStreamIn", root,SKYGFX.onClientElementStreamIn)
     removeEventHandlerEx("onClientElementStreamOut", root,SKYGFX.onClientElementStreamOut)

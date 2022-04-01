@@ -57,8 +57,6 @@ VS_OUTPUT main_vs(in VS_INPUT IN)
 	OUT.Color *= matCol / colorScale;
 	OUT.Color.rgb += ambient*surfAmb;
 	OUT.Texcoord.z = clamp((OUT.Position.w - fogEnd)*fogRange, fogDisable, 1.0);
-
-    
 	return OUT;
 }
 
@@ -70,20 +68,7 @@ float4 main_ps(PS_INPUT IN) : COLOR
 technique simplePS
 {
     pass P0
-    {
-        /*
-            flags & (rxGEOMETRY_TEXTURED2 | rxGEOMETRY_TEXTURED:
-                RwD3D9SetTexture(texture, 0);
-                RwD3D9SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
-                RwD3D9SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
-                RwD3D9SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
-                RwD3D9SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
-                RwD3D9SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
-                RwD3D9SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
-        */
- 
-        
-        
+    {        
         //AlphaTestEnable= true;
         AlphaFunc = GREATEREQUAL;
         AlphaRef = zwriteThreshold;

@@ -56,6 +56,8 @@ textureListTable.VehiclePSApplyList = {
     "vehiclegrunge256","?emap*"
 }
 
+textureListTable.txddb = {}
+
 SKYGFX = {
     -- start by default
     autoStart = true,
@@ -76,7 +78,7 @@ SKYGFX = {
     usePCTimecyc = false,
     RSPIPE_PC_CustomBuilding_PipeID = true,
     fogDisabled = false,
-    buildingExtraBrightness = 1.2,
+    buildingExtraBrightness = 1,
     vehicleExtraBrightness = 1,
 
     -- grass
@@ -88,9 +90,9 @@ SKYGFX = {
     dualPass=true,
     zwriteThreshold=128,
     disableZTest = true, -- if you want ps2 big sun lens
-    sunZTestLength = 2000, -- sun ztest length
+    sunZTestLength = 3000, -- sun ztest length
     -- misc
-    sunGlare = false, -- this adds the vehicle sun glares like in vice city.
+    sunGlare = true, -- this adds the vehicle sun glares like in vice city.
     -- Modify final colors in YCbCr space
     YCbCrCorrection=0,	-- turns this on or off (default 0)
     lumaScale=0.8588,	-- multiplier for Y (default 0.8588)
@@ -112,6 +114,49 @@ SKYGFX = {
     num_rubbish_sheets = 64,
     rubbish_max_dist = 23,
     rubbish_fade_dist = 20,
+    stochastic = true, 
+    stochasticDist = 50,
    
 }
 w, h = guiGetScreenSize()
+
+function getPropertyFromVars(vars,property) 
+    for i,v in ipairs(vars) do
+        local p = split(v,"=")
+        if #p == 2 then 
+            if p[1] == property then 
+                return tonumber(p[2])
+            end
+        end
+    end
+    return nil
+end
+function loadtxdDB() 
+    local f = fileOpen("models/texdb.txt",true)
+    local str = fileRead(f,fileGetSize(f))
+    fileClose(f)
+    Lines = split(str,'\n' )
+	local count = 0
+    for i=1,#Lines do
+        if not string.find(string.gsub(Lines[i], "\r", ""),"cat=") then 
+            local p = split(string.gsub(Lines[i], "\r", "")," ")
+	        local model = string.gsub(p[1], "\"", "")
+            textureListTable.txddb[model] = {
+                stochastic = getPropertyFromVars(p,"stochastic"),
+                alphamode = getPropertyFromVars(p,"alphamode"),
+                isdetail = getPropertyFromVars(p,"isdetail"),
+                hasdetail = getPropertyFromVars(p,"hasdetail"),
+                dualPass = getPropertyFromVars(p,"dualPass"),
+                zwriteThreshold = getPropertyFromVars(p,"zwriteThreshold"),
+                affiliate = getPropertyFromVars(p,"affiliate"),
+                detailtile = getPropertyFromVars(p,"detailtile"),
+            }
+            --[[
+            if textureListTable.txddb[model].zwriteThreshold then 
+                iprint(textureListTable.txddb[model])
+            end
+            --]]
+        end
+	end
+    
+end

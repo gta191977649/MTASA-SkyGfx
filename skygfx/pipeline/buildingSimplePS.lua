@@ -1,4 +1,4 @@
-shaderBuildingSimplePS = nil
+local buildPipelineShaders = {}
 gDayNightBalance = 1
 gWetRoadEffect = 0
 gColorScale = SKYGFX.ps2Modulate and 0xFF / 0x80 or 1;
@@ -26,51 +26,74 @@ function updateDayNightBalance(currentHour,currentMinute)
 end
 
 function doBuildingSimplePS() 
-    if not isElement(shaderBuildingSimplePS) then return end 
-    local amb = TIMECYC:getTimeCycleValue("amb")
-    if not amb then return end
-    local dirMult = TIMECYC:getTimeCycleValue("dirMult") * SKYGFX.buildingExtraBrightness
-    if not dirMult then return end
 
-    local r,g,b = unpack(amb)
-    buildingAmbient = {r * dirMult / 0xFF, g * dirMult  / 0xFF, b * dirMult  / 0xFF, 0}
-    dxSetShaderValue(shaderBuildingSimplePS,"ambient",buildingAmbient)
-    -- texture material color
-    dxSetShaderValue(shaderBuildingSimplePS,"matCol",{1,1,1,1})
-    --day / night params
-    local currentHour,currentMinute = getTime()
-    updateDayNightBalance(currentHour,currentMinute)
-    local dayparam = {} local nightparam = {}
-    if SKYGFX.RSPIPE_PC_CustomBuilding_PipeID then 
-        dayparam = {0,0,0,1}
-        nightparam = {1,1,1,1}
-    else
-        dayparam = {1.0-gDayNightBalance,1.0-gDayNightBalance,1.0-gDayNightBalance,gWetRoadEffect}
-        nightparam = {gDayNightBalance,gDayNightBalance,gDayNightBalance,1.0-gWetRoadEffect}
+    for _,buildingShader in ipairs(buildPipelineShaders) do
+        if not isElement(buildingShader) then return end 
+        local amb = TIMECYC:getTimeCycleValue("amb")
+        if not amb then return end
+        local dirMult = TIMECYC:getTimeCycleValue("dirMult") * SKYGFX.buildingExtraBrightness
+        if not dirMult then return end
+
+        local r,g,b = unpack(amb)
+        buildingAmbient = {r * dirMult / 0xFF, g * dirMult  / 0xFF, b * dirMult  / 0xFF, 0}
+        dxSetShaderValue(buildingShader,"ambient",buildingAmbient)
+        -- texture material color
+        dxSetShaderValue(buildingShader,"matCol",{1,1,1,1})
+        --day / night params
+        local currentHour,currentMinute = getTime()
+        updateDayNightBalance(currentHour,currentMinute)
+        local dayparam = {} local nightparam = {}
+        if SKYGFX.RSPIPE_PC_CustomBuilding_PipeID then 
+            dayparam = {0,0,0,1}
+            nightparam = {1,1,1,1}
+        else
+            dayparam = {1.0-gDayNightBalance,1.0-gDayNightBalance,1.0-gDayNightBalance,gWetRoadEffect}
+            nightparam = {gDayNightBalance,gDayNightBalance,gDayNightBalance,1.0-gWetRoadEffect}
+        end
+        dxSetShaderValue(buildingShader,"dayparam",dayparam)
+        dxSetShaderValue(buildingShader,"nightparam",nightparam)
+        dxSetShaderValue(buildingShader,"surfAmb",1)
+        --fog 
+        local fog_st = TIMECYC:getTimeCycleValue("fogSt")
+        local fog_end = TIMECYC:getTimeCycleValue("farClp")
+        local fog_range = math.abs(fog_st-fog_end)
+        dxSetShaderValue(buildingShader,"fogStart",fog_st)
+        dxSetShaderValue(buildingShader,"fogEnd",fog_end)
+        dxSetShaderValue(buildingShader,"fogRange",fog_range)
+        dxSetShaderValue(buildingShader,"fogDisable",SKYGFX.fogDisabled)
     end
-    dxSetShaderValue(shaderBuildingSimplePS,"dayparam",dayparam)
-    dxSetShaderValue(shaderBuildingSimplePS,"nightparam",nightparam)
-    dxSetShaderValue(shaderBuildingSimplePS,"colorScale",gColorScale)
-    dxSetShaderValue(shaderBuildingSimplePS,"surfAmb",1)
-    --fog 
-    local fog_st = TIMECYC:getTimeCycleValue("fogSt")
-    local fog_end = TIMECYC:getTimeCycleValue("farClp")
-    local fog_range = math.abs(fog_st-fog_end)
-    dxSetShaderValue(shaderBuildingSimplePS,"fogStart",fog_st)
-    dxSetShaderValue(shaderBuildingSimplePS,"fogEnd",fog_end)
-    dxSetShaderValue(shaderBuildingSimplePS,"fogRange",fog_range)
-    dxSetShaderValue(shaderBuildingSimplePS,"fogDisable",SKYGFX.fogDisabled)
 end
 
 function initBuildingSimplePSPipeline() 
-    if SKYGFX.dualPass then 
+    
+    if SKYGFX.dualPass then
         shaderBuildingSimplePS = dxCreateShader("shader/buildingSimplePSDual.fx",0,0,false,"world,object")
         dxSetShaderValue(shaderBuildingSimplePS,"zwriteThreshold",SKYGFX.zwriteThreshold)
     else
         shaderBuildingSimplePS = dxCreateShader("shader/buildingSimplePS.fx",0,0,false,"world,object")
     end
-    engineApplyShaderToWorldTexture(shaderBuildingSimplePS,"*")
-    for k, txd in pairs(textureListTable.BuildingPSRemoveList) do 
-        engineRemoveShaderFromWorldTexture(shaderBuildingSimplePS,txd)
+    table.insert(buildPipelineShaders,shaderBuildingSimplePS)
+
+    if SKYGFX.stochastic then
+        shaderStochasticPS = dxCreateShader("shader/simpleStochasticPS.fx",0,SKYGFX.stochasticDist,false,"world,object")
+        table.insert(buildPipelineShaders,shaderStochasticPS)
     end
+
+    for txd,param in pairs(textureListTable.txddb) do 
+        if isElement(shaderStochasticPS) and param.stochastic == 1 then 
+            engineApplyShaderToWorldTexture(shaderStochasticPS,txd)
+        else
+            engineApplyShaderToWorldTexture(shaderBuildingSimplePS,txd)
+        end
+    end
+
+    -- setup shader constants
+    for _,pipeline in ipairs(buildPipelineShaders) do
+        dxSetShaderValue(pipeline,"colorScale",gColorScale)
+         -- removed from MTA related txds
+        for k, txd in pairs(textureListTable.BuildingPSRemoveList) do 
+            engineRemoveShaderFromWorldTexture(pipeline,txd)
+        end
+    end
+
 end

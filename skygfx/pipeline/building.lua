@@ -98,7 +98,6 @@ function initBuildingPipeline()
 
     --local shaderReplacePS = dxCreateShader("shader/replace.fx")
     
-
     engineApplyShaderToWorldTexture(shaderReplacePS,"*")
     for k, txd in pairs(textureListTable.BuildingPSRemoveList) do 
         engineRemoveShaderFromWorldTexture(shaderReplacePS,txd)

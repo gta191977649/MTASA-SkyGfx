@@ -38,6 +38,7 @@
     <file src="shader/gradingPS.fx" type="client"/>
     <file src="shader/buildingSimplePS.fx" type="client"/>
     <file src="shader/buildingSimplePSDual.fx" type="client"/>
+    <file src="shader/simpleStochasticPS.fx" type="client"/>
     <file src="shader/ztest.fx" type="client"/>
     <file src="shader/ps2BuildingVS.fx" type="client"/>
     <file src="shader/ps2BuildingFxVS.fx" type="client"/>
@@ -56,6 +57,7 @@
     <file src="fx/rotor/model/rotor.txd" type="client"/>
     <file src="fx/rotor/model/black64aa.dds" type="client"/>
 	<file src="fx/rotor/rotor.fx" cache="false"/>
+	<file src="models/texdb.txt" cache="false"/>
 	
 	
     <export function="start" type="client"/>

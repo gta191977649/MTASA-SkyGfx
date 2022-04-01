@@ -33,14 +33,14 @@ function applyHeliRotorFix(heli)
     dxSetShaderValue(renderList[heli].shader,"alpha",1)
     engineApplyShaderToWorldTexture(renderList[heli].shader, "cargobobrotorblack*",heli)
     engineApplyShaderToWorldTexture(renderList[heli].shader, "*prop64black*",heli)
-    print("Rotor fixed apply")
+    --print("Rotor fixed apply")
 end
 
 function removeHeliRotorFix(heli)
     if renderList[heli] ~= nil then 
         destroyElement(renderList[heli].shader)
         renderList[heli] = nil
-        print("Rotor fixed removed")
+        --print("Rotor fixed removed")
     end
 end
 
@@ -79,8 +79,7 @@ function handleHeliStreamOut()
 end
 
 function enableRotorPs2Fix()
-    
-    addEventHandler("onClientRender",root,renderRotorEffect)
+    --addEventHandler("onClientRender",root,renderRotorEffect,false,"low")
     addEventHandler( "onClientElementStreamIn", root,handleHeliStreamIn);
     addEventHandler( "onClientElementStreamOut", root,handleHeliStreamOut);
     -- apply all rendered heli effect
@@ -90,10 +89,10 @@ function enableRotorPs2Fix()
         end
     end
     setWaterDrawnLast (false)
-    print("PS2 Rotor effect enable.")
+    --print("PS2 Rotor effect enable.")
 end
 function disableRotorPs2Fix()
-    removeEventHandler("onClientRender",root,renderRotorEffect)
+    --removeEventHandler("onClientRender",root,renderRotorEffect)
     removeEventHandler( "onClientElementStreamIn", root,handleHeliStreamIn);
     removeEventHandler( "onClientElementStreamOut", root,handleHeliStreamOut);
 
@@ -102,7 +101,7 @@ function disableRotorPs2Fix()
     end
     renderList = {}
     setWaterDrawnLast (true)
-    print("PS2 Rotor effect disable.")
+    --print("PS2 Rotor effect disable.")
 end
 
 -- test cmd
