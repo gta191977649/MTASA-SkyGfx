@@ -64,7 +64,9 @@ A project brings the classic aesthetic look to MTA (Thanks to aap for the origin
     * ps2ModulateGrass - ⚪
   - Shadows
     * pedShadows - ⚪
+      * Need Change MTA Engine
     * stencilShadows - ⚪
+      * Need Change MTA Engine
   - Misc
     * disableClouds - ⚪
     * disableGamma - ⚪
