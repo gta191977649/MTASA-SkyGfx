@@ -85,7 +85,7 @@ A project brings the classic aesthetic look to MTA (Thanks to aap for the origin
     * vehicleRearLightAlpha ✔️  Alpha multiplier for rear light
     * buildingExtraBrightness ✔️ Multiplier for building extra brightness
     * vehicleExtraBrightness ✔️ Multiplier for building extra brightness
-    * StochasticPS 🟠 (NOTE: Model prelight color sometime is incorrect for some model)
+    * StochasticPS 🟠 (NOTE: Some Model prelight is appeared incorrect)
       * Shader ported ✔️
       * Fix model pre-light color
  
