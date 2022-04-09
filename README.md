@@ -17,7 +17,7 @@ A project brings the classic aesthetic look to MTA (Thanks to aap for the origin
   * Trails(Blur) - ✔️
     * blurLeft,blurTop,blurRight,blurBottom works!
   * Radiosity - ✔️
-  * Color Filter - 🟠
+  * PostFX Filter - 🟠
     * PS2 ✔️
     * PC ✔️
     * Mobile - ⚪
