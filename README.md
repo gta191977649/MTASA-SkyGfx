@@ -10,14 +10,14 @@ A project brings the classic aesthetic look to MTA (Thanks to aap for the origin
 - ✔️ Done & Fully Supported
 - Pre-request Library
   * Timecyc Parser - ✔️
-  * Timecyc Interpolation - ✔️, Source mainly conveted from librw, thanks to aap!
+  * Timecyc Interpolation - ✔️, algorithms mainly conveted from librw, thanks to aap!
   * Timecyc Render - ✔️
   * Timecyc DebugTools (Optional) - DONE, But you're need dgs to work!
 - Postfx 
   * Trails(Blur) - ✔️
     * blurLeft,blurTop,blurRight,blurBottom works!
   * Radiosity - ✔️
-  * Color Filter - 🟠
+  * PostFX Filter - 🟠
     * PS2 ✔️
     * PC ✔️
     * Mobile - ⚪
