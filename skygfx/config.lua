@@ -114,8 +114,8 @@ SKYGFX = {
     num_rubbish_sheets = 64,
     rubbish_max_dist = 23,
     rubbish_fade_dist = 20,
-    stochastic = true, 
-    stochasticDist = 50,
+    stochastic = false, 
+    stochasticDist = 0,
    
 }
 w, h = guiGetScreenSize()

@@ -33,22 +33,32 @@ struct VS_INPUT
 	float4 DayColor		: COLOR1;
 };
 
-struct VS_OUTPUT {
-	float4 Position		: POSITION;
-	float3 Texcoord	    : TEXCOORD0;
-	float4 Color		: COLOR0;
-};
-
 
 struct PS_INPUT
 {
-    float4 position : POSITION0;
-	float3 texcoord0	: TEXCOORD0;
-    float2 texcoord1	: TEXCOORD1;
-	float4 color		: COLOR0;
-    float4 envcolor		: COLOR1;
+    float4 Position : POSITION;
+	float3 Texcoord0	: TEXCOORD0;
+	float4 WorldPosition : TEXCOORD1;
+	float4 Color		: COLOR0;
 };
-
+//------------------------------------------------------------------------------------------
+// MTAApplyFog
+//------------------------------------------------------------------------------------------
+int gFogEnable                     < string renderState="FOGENABLE"; >;
+float4 gFogColor                   < string renderState="FOGCOLOR"; >;
+float gFogStart                    < string renderState="FOGSTART"; >;
+float gFogEnd                      < string renderState="FOGEND"; >;
+ 
+float3 MTAApplyFog( float3 texel, float3 worldPos )
+{
+    if ( !gFogEnable )
+        return texel;
+ 
+    float DistanceFromCamera = distance( gCameraPosition, worldPos );
+    float FogAmount = ( DistanceFromCamera - gFogStart )/( gFogEnd - gFogStart );
+    texel.rgb = lerp(texel.rgb, gFogColor.rgb, saturate( FogAmount ) );
+    return texel;
+}
 //hash for randomness
 float2 hash2D2D(float2 s)
 {
@@ -81,29 +91,37 @@ float4 tex2DStochastic(sampler2D tex, float2 UV)
 	float2 dy = ddy(UV);
 
 	//blend samples with calculated weights
-	return mul(tex2D(tex, UV + hash2D2D(BW_vx[0].xy), dx, dy), BW_vx[3].x) +
+	float4 color = mul(tex2D(tex, UV + hash2D2D(BW_vx[0].xy), dx, dy), BW_vx[3].x) +
 		mul(tex2D(tex, UV + hash2D2D(BW_vx[1].xy), dx, dy), BW_vx[3].y) +
 		mul(tex2D(tex, UV + hash2D2D(BW_vx[2].xy), dx, dy), BW_vx[3].z);
+	return color;
 }
 
-VS_OUTPUT main_vs(in VS_INPUT IN)
+PS_INPUT main_vs(in VS_INPUT IN)
 {
-	VS_OUTPUT OUT;
+	PS_INPUT OUT;
+
+	OUT.WorldPosition = MTACalcWorldPosition(IN.Position);
+	float4 viewPos = mul(OUT.WorldPosition, gView);
+	OUT.WorldPosition.w = viewPos.z / viewPos.w;
 
 	OUT.Position = mul(float4(IN.Position), gWorldViewProjection);
 	//OUT.Texcoord0 = mul(texmat, float4(IN.TexCoord, 0.0, 1.0)).xy;
-	OUT.Texcoord = IN.TexCoord;
+	OUT.Texcoord0 = IN.TexCoord;
 	OUT.Color = IN.DayColor*dayparam + IN.NightColor*nightparam;
 	OUT.Color *= matCol / colorScale;
 	OUT.Color.rgb += ambient*surfAmb;
-	OUT.Texcoord.z = clamp((OUT.Position.w - fogEnd)*fogRange, fogDisable, 1.0);
+	OUT.Texcoord0.z = clamp((OUT.Position.w - fogEnd)*fogRange, fogDisable, 1.0);
 	return OUT;
 }
 
 
-float4 main_ps(PS_INPUT IN) : COLOR
+float4 main_ps(PS_INPUT IN) : COLOR0
 {
-	return tex2DStochastic(sampleTxd, IN.texcoord0.xy * 1.2) * IN.color * colorScale.x * brightness;
+	// * IN.color * colorScale * brightness * float4(MTAApplyFog(color.rgb, IN.envcolor.xyz),1)
+	float4 color = tex2DStochastic(sampleTxd, IN.Texcoord0.xy * 1.2) * IN.Color * colorScale * brightness ;
+	//return color;
+	return float4(MTAApplyFog(color.rgb, IN.WorldPosition.xyz),color.a);
 	//return tex2DStochastic(sampleTxd, IN.texcoord0.xy * 1.2) * IN.color * colorScale.x * brightness  + tex2D(sampleTxd_1, IN.texcoord1)*IN.envcolor * brightness;
 	//return tex2D(tex, IN.texcoord0.xy)*IN.color*colorscale.x;
 }
@@ -112,7 +130,7 @@ technique simplePS
 {
     pass P0
     {        
-        VertexShader = compile vs_3_0 main_vs();
+        VertexShader = compile vs_2_0 main_vs();
         PixelShader  = compile ps_3_0 main_ps();
     }
     

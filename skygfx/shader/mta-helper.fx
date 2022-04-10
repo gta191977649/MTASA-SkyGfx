@@ -156,10 +156,11 @@ float4 MTACalcScreenPosition( float3 InPosition )
 // MTACalcWorldPosition
 // - Transform position by current world matix
 //------------------------------------------------------------------------------------------
-float3 MTACalcWorldPosition( float3 InPosition )
+float4 MTACalcWorldPosition(float4 InPosition)
 {
-    return mul(float4(InPosition,1), gWorld).xyz;
+    return mul(InPosition, gWorld);
 }
+
 
 //------------------------------------------------------------------------------------------
 // MTACalcWorldNormal

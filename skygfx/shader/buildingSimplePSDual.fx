@@ -56,7 +56,7 @@ VS_OUTPUT main_vs(in VS_INPUT IN)
 	OUT.Color = IN.DayColor*dayparam + IN.NightColor*nightparam;
 	OUT.Color *= matCol / colorScale;
 	OUT.Color.rgb += ambient*surfAmb;
-	OUT.Texcoord.z = clamp((OUT.Position.w - fogEnd)*fogRange, fogDisable, 1.0);
+	//OUT.Texcoord.z = clamp((OUT.Position.w - fogEnd)*fogRange, fogDisable, 1.0);
 	return OUT;
 }
 
