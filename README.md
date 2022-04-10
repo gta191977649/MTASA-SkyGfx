@@ -10,14 +10,14 @@ A project brings the classic aesthetic look to MTA (Thanks to aap for the origin
 - ✔️ Done & Fully Supported
 - Pre-request Library
   * Timecyc Parser - ✔️
-  * Timecyc Interpolation - ✔️, algorithms mainly conveted from librw, thanks to aap!
+  * Timecyc Interpolation - ✔️, Source mainly conveted from librw, thanks to aap!
   * Timecyc Render - ✔️
   * Timecyc DebugTools (Optional) - DONE, But you're need dgs to work!
 - Postfx 
   * Trails(Blur) - ✔️
     * blurLeft,blurTop,blurRight,blurBottom works!
   * Radiosity - ✔️
-  * PostFX Filter - 🟠
+  * Color Filter - 🟠
     * PS2 ✔️
     * PC ✔️
     * Mobile - ⚪
@@ -64,9 +64,7 @@ A project brings the classic aesthetic look to MTA (Thanks to aap for the origin
     * ps2ModulateGrass - ⚪
   - Shadows
     * pedShadows - ⚪
-      * Need Change MTA Engine
     * stencilShadows - ⚪
-      * Need Change MTA Engine
   - Misc
     * disableClouds - ⚪
     * disableGamma - ⚪
@@ -80,16 +78,22 @@ A project brings the classic aesthetic look to MTA (Thanks to aap for the origin
       * needs to work on a new solution.
     * fixShadows - ⚪
   - Special Misc FX (Unique addon by nurupo)
-    * vehicleClassicFx ✔️ show VC/III liked vehicle big headlight and light trails when you rotate the screen
-    * vehicleTrailLength ✔️ Length of light trails (buffered frame)
-    * vehicleTrailDrawDist ✔️ What distance should trails start visiable?
-    * vehicleHeadLightAlpha ✔️ Alpha multiplier for head light
-    * vehicleRearLightAlpha ✔️  Alpha multiplier for rear light
-    * buildingExtraBrightness ✔️ Multiplier for building extra brightness
-    * vehicleExtraBrightness ✔️ Multiplier for building extra brightness
-    * StochasticPS 🟠 (NOTE: Some Model prelight is appeared incorrect)
-      * Shader ported ✔️
-      * Fix model pre-light color
+    * vehicleClassicFx ✔️ 
+      * Show VC/III liked vehicle big headlight and light trails when you rotate the screen
+    * vehicleTrailLength ✔️
+      * Length of light trails (buffered frame)
+    * vehicleTrailDrawDist ✔️ 
+      * What distance should trails start visiable?
+    * vehicleHeadLightAlpha ✔️ 
+      * Alpha multiplier for head light
+    * vehicleRearLightAlpha ✔️  
+      * Alpha multiplier for rear light
+    * buildingExtraBrightness ✔️ 
+      * Multiplier for building extra brightness
+    * vehicleExtraBrightness ✔️ 
+      * Multiplier for building extra brightness
+    * stochasticFilter ✔️
+      * Make repeative texture look better, ported from [Valdir da Costa Júnior](https://www.mixmods.com.br/2022/03/sa-skygfx/)
  
 - Bugs/Issue
   * ~Sun can see through by walls -> Due to zTest disabled~ ✔️
