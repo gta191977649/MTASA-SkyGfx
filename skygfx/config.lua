@@ -73,7 +73,7 @@ SKYGFX = {
     doRadiosity=true,-- Enable or disable radiosity
     radiosityFilterPasses=2,
     radiosityRenderPasses=1,
-    radiosityIntensity=35,
+    radiosityIntensity=50,
     radiosityIntensityLimit=0, -- use to override the intensity limit, 0 for use the value from timecyc (by default)
     usePCTimecyc = false,
     RSPIPE_PC_CustomBuilding_PipeID = true,
@@ -114,8 +114,8 @@ SKYGFX = {
     num_rubbish_sheets = 64,
     rubbish_max_dist = 23,
     rubbish_fade_dist = 20,
-    stochastic = false, 
-    stochasticDist = 0,
+    stochastic = true, 
+    building_dist = 100,
    
 }
 w, h = guiGetScreenSize()

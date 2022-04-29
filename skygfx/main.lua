@@ -1,4 +1,4 @@
-
+local isStarted = false
 -- event
 function SKYGFX.onClientElementStreamIn()
     if SKYGFX.vehicleClassicFx then
@@ -58,6 +58,7 @@ end
 
 
 function SKYGFX.start() 
+    if isStarted then return end
     -- init shits
     resetColorFilter()
     resetSunColor()
@@ -81,9 +82,11 @@ function SKYGFX.start()
     addEventHandlerEx("onClientPreRender", root,SKYGFX.onClientPreRender,false,"low")
     addEventHandlerEx("onClientHUDRender", root,SKYGFX.onClientHUDRender,false,"low")
     addEventHandlerEx("onClientElementDestroy", root,SKYGFX.onClientElementDestroy)
+    isStarted = true
 end
 
 function SKYGFX.stop() 
+    if not isStarted then return end
     resetColorFilter()
     resetSunColor()
     resetSkyGradient()
@@ -98,6 +101,7 @@ function SKYGFX.stop()
     removeEventHandlerEx("onClientPreRender", root,SKYGFX.onClientPreRender)
     removeEventHandlerEx("onClientHUDRender", root,SKYGFX.onClientHUDRender)
     removeEventHandlerEx("onClientElementDestroy", root,SKYGFX.onClientElementDestroy)
+    isStarted = false
 end
 
 

@@ -67,15 +67,15 @@ end
 function initBuildingSimplePSPipeline() 
     
     if SKYGFX.dualPass then
-        shaderBuildingSimplePS = dxCreateShader("shader/buildingSimplePSDual.fx",0,0,false,"world")
+        shaderBuildingSimplePS = dxCreateShader("shader/buildingSimplePSDual.fx",0,SKYGFX.building_dist,false,"world")
         dxSetShaderValue(shaderBuildingSimplePS,"zwriteThreshold",SKYGFX.zwriteThreshold)
     else
-        shaderBuildingSimplePS = dxCreateShader("shader/buildingSimplePS.fx",0,0,false,"world")
+        shaderBuildingSimplePS = dxCreateShader("shader/buildingSimplePS.fx",0,SKYGFX.building_dist,false,"world")
     end
     table.insert(buildPipelineShaders,shaderBuildingSimplePS)
 
     if SKYGFX.stochastic then
-        shaderStochasticPS = dxCreateShader("shader/simpleStochasticPS.fx",0,SKYGFX.stochasticDist,false,"world")
+        shaderStochasticPS = dxCreateShader("shader/simpleStochasticPS.fx",0,SKYGFX.building_dist,false,"world")
         table.insert(buildPipelineShaders,shaderStochasticPS)
     end
 
