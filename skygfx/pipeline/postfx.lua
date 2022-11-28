@@ -88,8 +88,6 @@ function doRadiosity(intensityLimit,filterPasses,renderPasses,intensity)
     dxSetRenderTarget()
     dxSetShaderValue(shaderAddblend,"src",rt_radiosity)
     dxDrawImage( 0,  0,  w, h, shaderAddblend,0,0,0,tocolor(255,255,255,SKYGFX.radiosityIntensity))
-    
-
 end
 
 function MODULATE2X(r,g,b,a) 
@@ -168,8 +166,6 @@ end
 function doColorGrading() 
     dxUpdateScreenSource(screenSource_3,true)
     dxSetShaderValue( shaderGradingPS, "tex",screenSource_3)
-
-
     dxDrawImage( 0,  0,  w, h, shaderGradingPS,0,0,0,tocolor(255,255,255,100))
 end
 

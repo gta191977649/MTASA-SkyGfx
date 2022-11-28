@@ -1,4 +1,7 @@
 <meta>
+    <include resource="timecyc"/>
+    <include resource="custom_coronas"/>
+    
     <oop>true</oop>
     <script src="config.lua" type="client" cache="false"/>
     <script src="lib.lua" type="client" cache="false"/>
@@ -12,6 +15,7 @@
     <script src="pipeline/building.lua" type="client" cache="false"/>
     <script src="pipeline/buildingSimplePS.lua" type="client" cache="false"/>
     <script src="pipeline/vehiclePipe.lua" type="client" cache="false"/>
+    <script src="pipeline/bloom.lua" type="client" cache="false"/>
     <script src="pipeline/postfx.lua" type="client" cache="false"/>
     <script src="pipeline/worldPipe.lua" type="client" cache="false"/>
     <script src="debug.lua" type="client" cache="false"/>
@@ -51,6 +55,9 @@
     <file src="shader/simplePS.fx" type="client"/>
     <file src="shader/replace.fx" type="client"/>
     <file src="shader/sun.fx" type="client"/>
+    <file src="shader/blurH.fx" type="client" />
+	<file src="shader/blurV.fx" type="client" />
+	<file src="shader/brightPass.fx" type="client" />
 	<!-- mise fix -->
 	<file src="fx/rotor/model/rotor_gen_main.dff" type="client"/>
     <file src="fx/rotor/model/rotor_gen_side.dff" type="client"/>
@@ -62,6 +69,5 @@
 	
     <export function="start" type="client"/>
     <export function="stop" type="client"/>
-    <include resource="timecyc"/>
-    <include resource="custom_coronas"/>
+
 </meta>

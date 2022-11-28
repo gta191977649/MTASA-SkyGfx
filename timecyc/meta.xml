@@ -1,8 +1,8 @@
 <meta>
-    <script src="timecyc.lua" type="client"/>
+    <script src="timecyc_vcs.lua" type="client"/>
     <script src="debug.lua" type="client"/>
 
-    <file src="timecyc.dat" type="client"/>
+    <file src="timecyc_vcs.dat" type="client"/>
 
     <export function="getTimeCycleValue" type="client"/>
     <export function="getWeather" type="client"/>

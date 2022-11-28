@@ -73,7 +73,7 @@ SKYGFX = {
     doRadiosity=true,-- Enable or disable radiosity
     radiosityFilterPasses=2,
     radiosityRenderPasses=1,
-    radiosityIntensity=50,
+    radiosityIntensity=40,
     radiosityIntensityLimit=0, -- use to override the intensity limit, 0 for use the value from timecyc (by default)
     usePCTimecyc = false,
     RSPIPE_PC_CustomBuilding_PipeID = true,
@@ -116,6 +116,7 @@ SKYGFX = {
     rubbish_fade_dist = 20,
     stochastic = true, 
     building_dist = 100,
+    trails = true, -- toogle trails effect, e.g. bloom
    
 }
 w, h = guiGetScreenSize()
