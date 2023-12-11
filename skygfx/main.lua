@@ -21,9 +21,9 @@ function SKYGFX.onClientRender()
     if SKYGFX.fixRotor then
         renderRotorEffect()
     end
-    if SKYGFX.disableZTest then
-        doSunFX() 
-    end
+    -- if SKYGFX.disableZTest then -- use the MTA 1.6.0 Native function instead
+    --     doSunFX() 
+    -- end
     if SKYGFX.vehicleClassicFx then
         doClassicFX() 
     end
@@ -45,16 +45,6 @@ function SKYGFX.onClientElementDestroy()
     end
 end
 
-function addEventHandlerEx(sEventName, pElementAttachedTo, func,pro,priority) 
-    if not isEventHandlerAdded( sEventName, pElementAttachedTo, func ) then 
-        addEventHandler( sEventName, pElementAttachedTo, func,pro,priority )
-    end
-end
-function removeEventHandlerEx(sEventName, pElementAttachedTo, func ) 
-    if isEventHandlerAdded( sEventName, pElementAttachedTo, func ) then 
-        removeEventHandler( sEventName, pElementAttachedTo, func )
-    end
-end
 
 
 function SKYGFX.start() 
@@ -71,6 +61,9 @@ function SKYGFX.start()
     initVehiclePiple()
     initPostFx()
     initWorldMiscFx()
+    if SKYGFX.sunGodray then
+        enableSunShader()
+    end
     if SKYGFX.fixRotor then 
         enableRotorPs2Fix()
     end

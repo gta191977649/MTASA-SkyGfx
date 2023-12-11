@@ -66,33 +66,35 @@ SKYGFX = {
     envPower=1.0, --Env specular light power (the higher the smaller the highlight)
     -- postfx
     colorFilter = "PS2", -- values: "PS2", "PC", "Mobile", (needs colorcycle.dat), "None"
-    blurLeft = 0.0004, -- Override PS2 color filter blur offset 
-    blurTop = 0.0004, -- to disable blur set these to 0
-    blurRight = 0.0004,
-    blurBottom = 0.0004,
+    blurLeft = 0.0002, -- Override PS2 color filter blur offset 
+    blurTop = 0.0002, -- to disable blur set these to 0
+    blurRight = 0.0002,
+    blurBottom = 0.0002,
     doRadiosity=true,-- Enable or disable radiosity
     radiosityFilterPasses=2,
     radiosityRenderPasses=1,
-    radiosityIntensity=50,
+    radiosityIntensity=30,
     radiosityIntensityLimit=0, -- use to override the intensity limit, 0 for use the value from timecyc (by default)
     usePCTimecyc = false,
     RSPIPE_PC_CustomBuilding_PipeID = true,
     fogDisabled = false,
     buildingExtraBrightness = 1,
     vehicleExtraBrightness = 1,
+    ps_modulate_scale = 0.6,
 
     -- grass
     grassAddAmbient=false, --0x5DAEC8, need fuck the memory, not fully done.
     --grassFixPlacement=true, 0x5DADB7, need fuck the memory
     grassBackfaceCull=true,
     -- world fx
-    ps2Modulate=true,
+    ps2Modulate=false,
     dualPass=true,
     zwriteThreshold=128,
     disableZTest = true, -- if you want ps2 big sun lens
     sunZTestLength = 3000, -- sun ztest length
     -- misc
     sunGlare = true, -- this adds the vehicle sun glares like in vice city.
+    sunGodray = true, -- this adds the vehicle sun godrays.
     -- Modify final colors in YCbCr space
     YCbCrCorrection=0,	-- turns this on or off (default 0)
     lumaScale=0.8588,	-- multiplier for Y (default 0.8588)
@@ -115,7 +117,10 @@ SKYGFX = {
     rubbish_max_dist = 23,
     rubbish_fade_dist = 20,
     stochastic = true, 
-    building_dist = 100,
+    building_dist = 200,
+
+    -- debug mode, enable for render all the shit bits
+    debug = false
    
 }
 w, h = guiGetScreenSize()

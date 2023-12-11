@@ -1,10 +1,15 @@
 <meta>
+    <min_mta_version client="1.3.5" server="1.3.5"/>
     <oop>true</oop>
+    <script src="classlib.lua" type="client" cache="false"/>
     <script src="config.lua" type="client" cache="false"/>
     <script src="lib.lua" type="client" cache="false"/>
     <script src="math.lua" type="client" cache="false"/>
     <script src="matrix.lua" type="client" cache="false"/>
     <script src="rtpool.lua" type="client" cache="false"/>
+    <script src="godrays/sun.lua" type="client" cache="false"/>
+    <script src="godrays/sunshader.lua" type="client" cache="false"/>
+    <script src="godrays/utils.lua" type="client" cache="false"/>
     <script src="fx/vehiclefx.lua" type="client" cache="false"/>
     <script src="fx/rubbish.lua" type="client" cache="false"/>
 	<script src="fx/rotor/rotor_v2.lua" type="client" cache="false"/>
@@ -29,6 +34,8 @@
     <file src="txd/xvehicleenv128.png" type="client"/>
     <file src="txd/coronaheadlightline.png" type="client"/>
     <file src="txd/coronastar.png" type="client"/>
+    <file src="txd/lensflare_dirt.png" type="client"/>
+    <file src="txd/lensflare_chroma.png" type="client"/>
     <file src="shader/mta-helper.fx" type="client"/>
     <file src="shader/ps2CarFxVS.fx" type="client"/>
     <file src="shader/ps2CarFxVSPS.fx" type="client"/>
@@ -51,6 +58,14 @@
     <file src="shader/simplePS.fx" type="client"/>
     <file src="shader/replace.fx" type="client"/>
     <file src="shader/sun.fx" type="client"/>
+
+    <!-- sun godrays -->
+    <file src="shader/bw.fx" type="client"/>
+    <file src="shader/godRayBase.fx" type="client"/>
+    <file src="shader/sun_lens.fx" type="client"/>
+    <file src="shader/godrays.fx" type="client"/>
+    <file src="shader/lensflares.fx" type="client"/>
+
 	<!-- mise fix -->
 	<file src="fx/rotor/model/rotor_gen_main.dff" type="client"/>
     <file src="fx/rotor/model/rotor_gen_side.dff" type="client"/>

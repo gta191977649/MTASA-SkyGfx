@@ -205,6 +205,13 @@ function updateSA(weather_id,currentHour,currentMinute)
         end
     end
 end 
+
+function renderTimecycLoop() 
+    local h,m = getTime()
+    local wea = getWeather()
+    updateSA(wea,h,m)
+end
+
 function getTimeCycleValue(key) 
     --local h,m = getTime()
     --local time = clampTimeIndex(h)
@@ -218,17 +225,21 @@ function setWeatherBlended(wea)
 end
 function setWeather(wea) 
     Weather.old =wea
+    Weather.new = wea
+    Weather.interpolation = 1
+    renderTimecycLoop() 
 end
 function getWeather() 
     return Weather.old,Weather.interpolation < 1 and Weather.new or nil
 end
+
+
 addEventHandler( "onClientResourceStart",resourceRoot,function ()
     loadTimeCycle("timecyc.dat")
-    addEventHandler("onClientRender",root,function()
-        local h,m = getTime()
-        local wea = getWeather()
-        updateSA(wea,h,m)
-    end,false,"low")
+    addEventHandler("onClientRender",root,renderTimecycLoop,false,"low")
 end)
---setWeather(1) 
---setWeatherBlended(8) 
+addEventHandler("onWeatherSet",root,function(newWeather) 
+    print("new weather is set "..newWeather)
+    setWeather(newWeather) 
+end)
+

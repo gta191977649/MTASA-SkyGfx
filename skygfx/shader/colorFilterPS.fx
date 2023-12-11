@@ -28,7 +28,7 @@ float4 main(PS_INPUT IN) : COLOR
 	float4 c = tex2D(Sampler0, txdCord);
 
 	c = c*rgb1*2 + c*rgb2*2*rgb2.a*2;
-    c.a = 1.0f;
+    c.a = 1;
 	return c;
 }
 

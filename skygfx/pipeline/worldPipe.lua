@@ -68,14 +68,14 @@ end
 
 function doClassicFX() 
     for veh,vehicle in pairs(renderCache) do 
-        if isElement(veh) and isElementOnScreen(veh) and areVehicleLightsOn(veh) then
+        if isElement(veh) and getElementType(veh) == "vehicle" and isElementOnScreen(veh) and areVehicleLightsOn(veh) then
             doVehicleLightTrails(veh) 
         end
     end
 end
 function doClassicFXPreRender() 
     for veh,vehicle in pairs(renderCache) do 
-        if isElement(veh) then
+        if isElement(veh) and getElementType(veh) == "vehicle" then
             if isElementOnScreen(veh) and areVehicleLightsOn(veh) then
                 doVehicleClassicLight(veh) 
             else
@@ -100,15 +100,15 @@ function initWorldMiscFx()
     for k,v in ipairs(getElementsByType ("vehicle",root, true) ) do 
         initVehicleRenderCache(v) 
     end
-    -- sun 
-    if SKYGFX.disableZTest then
-        sunShader = dxCreateShader("shader/sun.fx")
-        local starTex = dxCreateTexture("txd/coronastar.png", "argb")
-        dxSetShaderValue( sunShader, "fViewportSize", w, h )
-        dxSetShaderValue( sunShader, "bResAspectBug", true )
-        dxSetShaderValue( sunShader, "sTexStar", starTex  )
-    end
-
+    -- sun deprecated, using mta native function instead
+    -- if SKYGFX.disableZTest then
+    --     sunShader = dxCreateShader("shader/sun.fx")
+    --     local starTex = dxCreateTexture("txd/coronastar.png", "argb")
+    --     dxSetShaderValue( sunShader, "fViewportSize", w, h )
+    --     dxSetShaderValue( sunShader, "bResAspectBug", true )
+    --     dxSetShaderValue( sunShader, "sTexStar", starTex  )
+    -- end
+    setWorldSpecialPropertyEnabled ("coronaztest", not SKYGFX.disableZTest )
 
     --[[ 
     shaderBigHeadlight = dxCreateShader("shader/replace.fx", 0, 0, false, "world")

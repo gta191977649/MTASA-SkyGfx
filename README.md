@@ -94,6 +94,8 @@ A project brings the classic aesthetic look to MTA (Thanks to aap for the origin
       * Multiplier for building extra brightness
     * stochasticFilter ✔️
       * Make repeative texture look better, ported from [Valdir da Costa Júnior](https://www.mixmods.com.br/2022/03/sa-skygfx/)
+    * sun godrays
+      * implmented an enhanced godray effect for sun (optional in config)
  
 - Bugs/Issue
   * ~Sun can see through by walls -> Due to zTest disabled~ ✔️
